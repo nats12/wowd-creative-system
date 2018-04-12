@@ -19,13 +19,13 @@ class InputHandler {
   
   
   /**
-   * getSaved
+   * getYear
    * 
    * 
    */ 
-  String getSaved() {
+  String getYear() {
   
-    return saved;
+    return year;
   }
   
 }

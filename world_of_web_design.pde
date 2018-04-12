@@ -7,8 +7,8 @@
 // Variable to store text currently being typed
 String typing = "";
   
-// Variable to store saved text when return is hit
-String saved = "";
+// Variable to store a given year
+String year = "";
   
 PFont f;
 
@@ -24,7 +24,7 @@ String[] response;
  * 
  */
 void setup() {
-  size(640, 640);
+  size(1024, 768);
   f = createFont("Arial",16);
   
   elementsHandler = new ElementsHandler();
@@ -32,7 +32,8 @@ void setup() {
   inputHandler = new InputHandler();
   
   response = responseHandler.getResponseBody();
-
+  //print(response);
+  // Stop draw function from looping once year has been set
   noLoop();
 }
 
@@ -45,10 +46,10 @@ void setup() {
 void draw() {
   background(255);
   
-  if(saved == "") {
+  if(year == "") {
     displayUserInput();
   } else {
-    responseHandler.formatResponse(response, saved);
+    responseHandler.formatResponse(response, year);
     drawWebsiteDesign();
   }
 }
@@ -66,6 +67,7 @@ void draw() {
     
     elementsHandler.drawImageElements();
     elementsHandler.drawLinkElements();
+    elementsHandler.drawNavElements();
     
   }
 
@@ -78,15 +80,19 @@ void draw() {
   void keyPressed() {
     // If the return key is pressed, save the String and clear it
     if (key == '\n' ) {
-      saved = typing;
+      year = typing;
       // A String can be cleared by setting it equal to ""
       typing = ""; 
+    } else if(key == '\b') {
+      // If the backspace key is pressed, remove the last character from the string
+      typing = typing.substring(0, typing.length() - 1);
     } else {
       // Otherwise, concatenate the String
       // Each character typed by the user is added to the end of the String variable.
       typing = typing + key; 
     }
     
+    // Keep drawing until year has been given
     redraw();
   }
 
@@ -100,8 +106,6 @@ void draw() {
     int indent = 25;
     textFont(f);
     fill(0);
-    
-    // Display everything
     text("You would like to see a typical website design from the year: ", indent, 170);
     text("Input: " + typing,indent,190);
    }

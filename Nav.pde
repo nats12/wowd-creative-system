@@ -1,16 +1,14 @@
 /**
- * Image Class
+ * Nav Class
  * @author Natalie Mclaren
  * 
  */
  
  
-class Image {
+class Nav {
   float x,y;
-  
-  
-  
-  Image(float x_, float y_) {
+ 
+  Nav(float x_, float y_) {
     x = x_;
     y = y_;
   }
@@ -21,12 +19,10 @@ class Image {
    * 
    */
   void display() {
-    PImage img;
-    img = loadImage("moonwalk.jpg");
-  
     stroke(0);
     strokeWeight(1);
     noFill();
-    image(img, x, y, 100, 100);
+    String s = "Nav link";
+    text(s, x, y);
   }
 }
