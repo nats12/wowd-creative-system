@@ -15,9 +15,9 @@ class ResponseHandler {
    * 
    * 
    */ 
-  ResponseHandler(String url, ElementsHandler handler) {
+  ResponseHandler(String url, ElementsHandler elHandler) {
     requestUrl = url;
-    elementsHandler = handler;
+    elementsHandler = elHandler;
   }
     
   
@@ -57,13 +57,16 @@ class ResponseHandler {
       
       for(int k = 0; k < formattedResponse.length-1; k++) {
         // Re-append last curly bracket to make them JSON parsable
-        JSONObject json = parseJSONObject(formattedResponse[k].concat("}"));
+        JSONObject obj = parseJSONObject(formattedResponse[k].concat("}"));
         
-        if (json == null) {
+        if (obj == null) {
           println("JSONObject could not be parsed");
         } else {
-          // Find the object matching the given year and insert shape objects into an array for every type of element
-          elementsHandler.getWebsiteElementCount(json, parseInt(saved));
+          if(obj.getInt("year") == parseInt(saved)) {
+            print(obj);
+            // Find the object matching the given year and insert shape objects into an array for every type of element
+            elementsHandler.getWebsiteElementCount(obj);
+          }
         }
       }
     }

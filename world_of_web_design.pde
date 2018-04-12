@@ -33,6 +33,7 @@ void setup() {
   
   response = responseHandler.getResponseBody();
 
+  noLoop();
 }
 
 
@@ -85,6 +86,8 @@ void draw() {
       // Each character typed by the user is added to the end of the String variable.
       typing = typing + key; 
     }
+    
+    redraw();
   }
 
 

@@ -23,20 +23,20 @@ import processing.net.*;
    * 
    * 
    */
-   public void getWebsiteElementCount(JSONObject object, int year) {
+   public void getWebsiteElementCount(JSONObject object) {
     
-    if(object.getInt("year") == year){
-      //print(object);
+    
+      
       int numberOfImages = getNumberOfImagesInObject(object);
       int numberOfLinks = getNumberOfLinksInObject(object);
-     
+  
       imagesArray = new Image[numberOfImages]; 
       linksArray = new Link[numberOfLinks]; 
 
       populateImagesArray(numberOfImages);
       populateLinksArray(numberOfLinks);
       
-    }
+
   }
   
   
