@@ -7,17 +7,17 @@
  
 class Image {
   float x,y;
-  String name;
  
-  
-  // Create  the Square
-  Image(float x_, float y_, String s) {
+  Image(float x_, float y_) {
     x = x_;
     y = y_;
-    name = s;
   }
   
-  // Display the Square
+  /**
+   * display
+   * 
+   * 
+   */
   void display() {
     stroke(0);
     strokeWeight(1);
