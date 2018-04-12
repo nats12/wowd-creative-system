@@ -10,7 +10,7 @@ class Footer {
  
   Footer() {
     x = 0;
-    y = 0;
+    y = 620;
   }
   
   /**
@@ -22,6 +22,6 @@ class Footer {
     stroke(0);
     strokeWeight(1);
     noFill();
-    rect(x,y,200,200);
+    rect(x,y,1024,100);
   }
 }

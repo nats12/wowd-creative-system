@@ -10,7 +10,7 @@ import processing.net.*;
    Image[] imagesArray;
    Link[] linksArray;
    Nav[] navsArray;
-   Footer[] footerArray;
+   Footer[] footersArray;
 
   /**
    * Constructor
@@ -32,14 +32,17 @@ import processing.net.*;
       int numberOfImages = getNumberOfImagesInObject(object);
       int numberOfLinks = getNumberOfLinksInObject(object);
       int numberOfNavs = getNav(object);
+      int numberOfFooters = getFooter(object);
   
       imagesArray = new Image[numberOfImages]; 
       linksArray = new Link[numberOfLinks]; 
-      navsArray = new Nav[numberOfNavs]; 
+      navsArray = new Nav[numberOfNavs];
+      footersArray = new Footer[numberOfFooters];
 
       populateImagesArray(numberOfImages);
       populateLinksArray(numberOfLinks);
       populateNavArray(numberOfNavs);
+      populateFootersArray(numberOfFooters);
 
    }
   
@@ -68,13 +71,25 @@ import processing.net.*;
   
   
   /**
-   * getFooter
+   * getNav
    * 
    * 
    */
    int getNav(JSONObject object) {
     
      return object.getInt("nav");
+   }
+   
+   
+   
+   /**
+   * getFooter
+   * 
+   * 
+   */
+   int getFooter(JSONObject object) {
+    
+     return object.getInt("footer");
    }
   
   
@@ -89,12 +104,15 @@ import processing.net.*;
     int x = 0;
     int y = 30;
  
-    for(int k = 0; k < numberOfLinks; k++) {
-       y+=20;
-      // Put object in array
-      //world_of_web_design w = new world_of_web_design();
-      linksArray[k] = new Link(x, y);
-     }
+    if(numberOfLinks > 0) {
+      for(int k = 0; k < numberOfLinks; k++) {
+         y+=20;
+        // Put object in array
+        linksArray[k] = new Link(x, y);
+       }
+     } else {
+      print("Empty 'links' array!");
+    }
      
      return linksArray;
   }
@@ -112,14 +130,16 @@ import processing.net.*;
     int x = 0;
     int y = 200;
     
-    for(int i = 0; i < numberOfImages; i++) {
-       x+=100;
-      // Put object in array
-      //world_of_web_design w = new world_of_web_design();
-      imagesArray[i] = new Image(x, y);
-      
-     }
-     
+    if(numberOfImages > 0) {
+      for(int i = 0; i < numberOfImages; i++) {
+         x+=100;
+        // Put object in array
+        imagesArray[i] = new Image(x, y);
+      }
+    } else {
+      print("Empty 'images' array!");
+    }
+    
      return imagesArray;
   }
   
@@ -135,7 +155,7 @@ import processing.net.*;
     int randomNavs[][] = {{0, 15}, {320, 30}, {70, 50}};
     int index = 0;
     
-    // Loop through the random navigation positions array and choose one at random
+    // Loop through the possible navigation positions array and choose one at random
     for(int i = 0; i < randomNavs.length; i++) {
       index = int(random(randomNavs.length));
     }
@@ -144,15 +164,44 @@ import processing.net.*;
     int x = randomNavs[index][0];
     int y = randomNavs[index][1];
     
-    for(int i = 0; i < numberOfNavs; i++) {
-      y+=20;
-      // Put object in array
-      navsArray[i] = new Nav(x, y);
-     }
-     
+    if(numberOfNavs > 0) {
+      for(int i = 0; i < numberOfNavs; i++) {
+        y+=20;
+        // Put object in array
+        navsArray[i] = new Nav(x, y);
+      }
+    } else {
+      print("Empty 'nav' array!");
+    }
+   
      return navsArray;
-     
   }
+  
+  
+  
+  /**
+   * populateFootersArray
+   * 
+   * 
+   */
+   public Footer[] populateFootersArray(int numberOfFooters) {
+    
+    int x = 0;
+    int y = 200;
+    
+    if(numberOfFooters > 0) {
+      for(int i = 0; i < numberOfFooters; i++) {
+         x+=100;
+        // Put object in array
+        footersArray[i] = new Footer();
+      }
+    } else {
+      print("Empty 'images' array!");
+    }
+    
+     return footersArray;
+  }
+  
   
   
   /**
@@ -189,6 +238,19 @@ import processing.net.*;
     
     for (Nav n : navsArray) {
       n.display();
+    }
+  }
+  
+  
+  /**
+   * drawFooterElements
+   * 
+   * 
+   */
+  public void drawFooterElements() {
+    
+    for (Footer f : footersArray) {
+      f.display();
     }
   }
 }
