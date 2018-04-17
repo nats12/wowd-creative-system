@@ -43,7 +43,7 @@ class Website {
     bottomX = 0;
     bottomY = 700;
     bottomWidth = 1024;
-    bottomHeight = 68;
+    bottomHeight = 67;
     
     elementsHandler = elHandler;
   }
@@ -94,7 +94,7 @@ class Website {
     //fill(#ff0000);
     rect(bottomX, bottomY, bottomWidth, bottomHeight);
     
-    elementsHandler.drawFooterElements();
+    elementsHandler.drawFooter();
   }
   
   

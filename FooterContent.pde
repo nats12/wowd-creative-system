@@ -1,18 +1,16 @@
 /**
- * Footer Class
+ * Footer Content Class
  * @author Natalie Mclaren
  * 
  */
  
  
-class Footer {
+class FooterContent {
   float x,y;
- 
   int randX = int(random(1024));
-  int randY = int(random(710, 767));
- 
+  int randY = int(random(700, 768));
   
-  Footer() {
+  FooterContent() {
     x = randX;
     y = randY;
   }
@@ -26,7 +24,7 @@ class Footer {
     stroke(0);
     strokeWeight(1);
     noFill();
-    String s = "Footer text";
+    String s = "Footer link";
     text(s, x, y);
   }
 }

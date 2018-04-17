@@ -8,9 +8,9 @@
 class Nav {
   float x,y;
   int randX = int(random(1024));
-  int randY = int(random(100));
+  int randY = int(random(0, 100));
   
-  Nav(float x_, float y_) {
+  Nav() {
     x = randX;
     y = randY;
   }

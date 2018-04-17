@@ -150,25 +150,11 @@ import processing.net.*;
    * 
    */
    public Nav[] populateNavArray(int numberOfNavs) {
-    
-     // Possible navigation positions
-    int randomNavs[][] = {{0, 15}, {320, 30}, {70, 50}};
-    int index = 0;
-    
-    // Loop through the possible navigation positions array and choose one at random
-    for(int i = 0; i < randomNavs.length; i++) {
-      index = int(random(randomNavs.length));
-    }
-    
-    // Assign x and y to the chosen position indexes
-    int x = randomNavs[index][0];
-    int y = randomNavs[index][1];
-    
+
     if(numberOfNavs > 0) {
       for(int i = 0; i < numberOfNavs; i++) {
-        y+=20;
         // Put object in array
-        navsArray[i] = new Nav(x, y);
+        navsArray[i] = new Nav();
       }
     } else {
       print("Empty 'nav' array!");
@@ -247,8 +233,8 @@ import processing.net.*;
    * 
    * 
    */
-  public void drawFooterElements() {
-    
+  public void drawFooter() {
+
     for (Footer f : footersArray) {
       f.display();
     }

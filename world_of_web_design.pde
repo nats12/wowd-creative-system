@@ -72,7 +72,7 @@ void draw() {
     background(255);
     //x, y, w, h
     website.topSection();
-    website.midSection();
+    //website.midSection();
     website.bottomSection();
     
   }
