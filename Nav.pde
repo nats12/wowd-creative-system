@@ -7,10 +7,12 @@
  
 class Nav {
   float x,y;
- 
+  int randX = int(random(1024));
+  int randY = int(random(100));
+  
   Nav(float x_, float y_) {
-    x = x_;
-    y = y_;
+    x = randX;
+    y = randY;
   }
   
   /**

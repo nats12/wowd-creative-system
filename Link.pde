@@ -22,5 +22,6 @@ class Link {
     fill(0);
     String s = "Lorem Impsum";
     text(s, x, y);
+   
   }
 }

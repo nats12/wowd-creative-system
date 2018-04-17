@@ -3,16 +3,21 @@
  * @author Natalie Mclaren 
  * 
  */
- 
 
-  
+java.awt.Insets insets;
+
+
 PFont f;
 
 ResponseHandler responseHandler;
 ElementsHandler elementsHandler;
 InputHandler inputHandler;
+Website website;
 
 String[] response;
+
+int windowWidth = 1024;
+int windowHeight = 768;
 
 /**
  * setup
@@ -21,14 +26,18 @@ String[] response;
  */
 void setup() {
   size(1024, 768);
-  f = createFont("Arial",16);
+  //insets = frame.getInsets();
+  surface.setResizable(true);
+
+  f = createFont("Arial", 16);
   
   elementsHandler = new ElementsHandler();
-  responseHandler = new ResponseHandler("http://localhost:8000/api/websites/new", elementsHandler);
   inputHandler = new InputHandler();
+  responseHandler = new ResponseHandler("http://localhost:8000/api/websites/new", elementsHandler);
+  website = new Website(elementsHandler);
   
   response = responseHandler.getResponseBody();
-  //print(response);
+
   // Stop draw function from looping once year has been set
   noLoop();
 }
@@ -47,6 +56,7 @@ void draw() {
   } else {
     responseHandler.formatResponse(response, inputHandler.year);
     drawWebsiteDesign();
+    //saveFrame("line-######.png");
   }
 }
 
@@ -60,15 +70,22 @@ void draw() {
   void drawWebsiteDesign() {
    
     background(255);
-    
-    elementsHandler.drawImageElements();
-    elementsHandler.drawLinkElements();
-    elementsHandler.drawNavElements();
-    elementsHandler.drawFooterElements();
+    //x, y, w, h
+    website.topSection();
+    website.midSection();
+    website.bottomSection();
     
   }
   
   
+  //void mouseWheel() {
+    
+  //  setSize(windowWidth, windowHeight += 1);
+  //  //redraw();
+  //  //website.adjustSections();
+  //}
+
+
   
   /**
    * keyPressed
