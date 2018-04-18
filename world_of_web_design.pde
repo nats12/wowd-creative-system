@@ -55,6 +55,7 @@ void draw() {
     inputHandler.displayUserInput();
   } else {
     responseHandler.formatResponse(response, inputHandler.year);
+    elementsHandler.getElementChildren();
     drawWebsiteDesign();
     //saveFrame("line-######.png");
   }
@@ -72,7 +73,7 @@ void draw() {
     background(255);
     //x, y, w, h
     website.topSection();
-    //website.midSection();
+    website.midSection();
     website.bottomSection();
     
   }

@@ -58,12 +58,11 @@ class ResponseHandler {
       for(int k = 0; k < formattedResponse.length-1; k++) {
         // Re-append last curly bracket to make them JSON parsable
         JSONObject obj = parseJSONObject(formattedResponse[k].concat("}"));
-        
+
         if (obj == null) {
           println("JSONObject could not be parsed");
         } else {
           if(obj.getInt("year") == parseInt(year)) {
-            //print(obj);
             // Find the object matching the given year and insert shape objects into an array for every type of element
             elementsHandler.getWebsiteElementCount(obj);
           } 
