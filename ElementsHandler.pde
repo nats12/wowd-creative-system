@@ -8,14 +8,19 @@ import processing.net.*;
  class ElementsHandler {
   
    Image[] imagesArray;
-   Link[] linksArray;
-   Paragraph[] paragraphsArray;
-   Nav[] navsArray;
+   //Link[] linksArray;
+   //Paragraph[] paragraphsArray;
    Footer[] footersArray;
    
-   ArrayList<Sibling> siblingsArray = new ArrayList<Sibling>();
+   int numberOfNavs;
+   int numberOfParagraphs;
+   int numberOfLinks;
+   int navLinksArray;
    
-   int childFrequencies;
+   ArrayList<Paragraph> paragraphsArray = new ArrayList<Paragraph>();
+   ArrayList<Link> linksArray = new ArrayList<Link>();
+   ArrayList<Sibling> siblingsArray = new ArrayList<Sibling>();
+  
 
   /**
    * Constructor
@@ -35,22 +40,20 @@ import processing.net.*;
     
       
       int numberOfImages = getNumberOfImagesInObject(object);
-      int numberOfLinks = getNumberOfLinksInObject(object);
-      int numberOfParagraphs = getNumberOfParagraphsInObject(object);
-      int numberOfNavs = getNav(object);
+      numberOfLinks = getNumberOfLinksInObject(object);
+      numberOfParagraphs = getNumberOfParagraphsInObject(object);
+      numberOfNavs = getNav(object);
       int numberOfFooters = getFooter(object);
   
       imagesArray = new Image[numberOfImages]; 
-      linksArray = new Link[numberOfLinks]; 
-      paragraphsArray = new Paragraph[numberOfParagraphs]; 
-      navsArray = new Nav[numberOfNavs];
+      //linksArray = new Link[numberOfLinks]; 
+      //paragraphsArray = new Paragraph[numberOfParagraphs]; 
       footersArray = new Footer[numberOfFooters];
 
       populateImagesArray(numberOfImages);
-      populateLinksArray(numberOfLinks);
-      populateSiblingsArray("p");
-      populateParagraphsArray(numberOfParagraphs);
-      //populateNavArray(numberOfNavs);
+      populateLinksArray();
+      //populateSiblingsArray("p");
+      populateParagraphsArray();
       populateFootersArray(numberOfFooters);
     
     
@@ -157,27 +160,53 @@ import processing.net.*;
    * 
    * 
    */
-   public Paragraph[] populateParagraphsArray(int numberOfParagraphs) {
+   public ArrayList<Paragraph> populateParagraphsArray() {
    
     int x = 0;
     int y = 30;
+    int paragraphs = 0;
+    int percentOfParagraphsArray = (int)(numberOfParagraphs / 100) * 10;
+     
+     if(numberOfParagraphs > 15) {
+       paragraphs = percentOfParagraphsArray;
+     } else {
+       paragraphs = numberOfParagraphs;
+     }
+      
+    //String[] siblings = getElementSiblings("p");
+    int randX = int(random(10, 500));
+    int randY = int(random(110, 600));
     
-    
-    if(numberOfParagraphs > 0) {
-      for(int k = 0; k < numberOfParagraphs; k++) {
-         
-         y+=20;
+ 
+    int textWidth = int(random(50, 510));
+    int textHeight = int(random(100));
+        
+    //println(paragraphs);
+    if(paragraphs > 0) {
+      for(int k = 0; k < paragraphs; k++) {
+        
+        if(parseInt(inputHandler.year) > 2010) {
+          randX += 200;
+          randY += 100;
+        } else {
+          randX = 10;
+          randY = 110;
+        }
+        
+        if(randX > 1020) {
+          randX -= 510;
+        }
+        if((randY + textHeight) > 600) {
+          randY -= 100;
+        }
+        
+        paragraphsArray.add(new Paragraph(randX, randY, textWidth, textHeight));
+
         // Put object in array
-        paragraphsArray[k] = new Paragraph(x, y);
+        //paragraphsArray[k] = new Paragraph(x, y);
        }
      } 
-    
 
-    //for (Sibling s : siblingsArray) {
-    //  //Sibling s = siblingsArray.get(i);
-    //  s.display();
-    //}
-    
      return paragraphsArray;
   }
   
@@ -187,16 +216,29 @@ import processing.net.*;
    * 
    * 
    */
-   public Link[] populateLinksArray(int numberOfLinks) {
+   public ArrayList<Link> populateLinksArray() {
    
     int x = 0;
     int y = 30;
- 
-    if(numberOfLinks > 0) {
-      for(int k = 0; k < numberOfLinks; k++) {
-         y+=20;
+    int links = 0;
+    
+    int percentOfLinksArray = (int)(numberOfLinks / 100) * 10;
+     
+     if(numberOfLinks > 15) {
+       links = percentOfLinksArray;
+     } else {
+       links = numberOfLinks;
+     }
+      
+    print(numberOfLinks);
+    if(links > 0) {
+      for(int k = 0; k < links; k++) {
+        int randX = int(random(0));
+        int randY = int(random(110, 700));
+
         // Put object in array
-        linksArray[k] = new Link(x, y);
+        linksArray.add(new Link(randX, randY));
+
        }
      } else {
       print("Empty 'links' array!");
@@ -217,7 +259,7 @@ import processing.net.*;
     
     int x = 0;
     int y = 200;
-    
+
     if(numberOfImages > 0) {
       for(int i = 0; i < numberOfImages; i++) {
          x+=100;
@@ -231,83 +273,32 @@ import processing.net.*;
      return imagesArray;
   }
   
-  
-  /**
-   * populateNavArray
-   * 
-   * 
-   */
-   public Nav[] populateNavArray(int numberOfNavs) {
-    
-     
-    if(numberOfNavs > 0) {
-      for(int i = 0; i < numberOfNavs; i++) {
-        // Put object in array
-        //navsArray[i] = new Nav();
-      }
-      
-      //for(int j = 0; j < formattedResponse.length-1; j++) {
-          
-        
-        
-      // }
-   
-      
-    } else {
-      print("Empty 'nav' array!");
-    }
-   
-     return navsArray;
-  }
+ 
   
   /**
    * getObjectChildren
    * 
    * 
    */
-  public void getElementChildren() {
+  public String[] getElementChildren(String element) {
 
     ResponseHandler responseHandler;
-    responseHandler = new ResponseHandler("http://localhost:8000/api/websites/" + inputHandler.year + "/elements/nav/children", this);
-    response = responseHandler.getResponseBody();
-    
-    
-    for (int i = 0; i < response.length; i++) {
+    responseHandler = new ResponseHandler("http://localhost:8000/api/websites/" + inputHandler.year + "/elements/" + element + "/children", this);
+    return response = responseHandler.getResponseBody();
+  }
   
-      // Remove array brackets and every object's final curly bracket
-      String[] formattedResponse = responseHandler.splitEndBracketAndComma(response[i]);
-      
-      for(int k = 0; k < formattedResponse.length; k++) {
-        // Re-append last curly bracket to make them JSON parsable
-        JSONObject obj = parseJSONObject(formattedResponse[k].concat("}"));
-        
-        if (obj == null) {
-          println("JSONObject could not be parsed");
-        } else {
-          String child = obj.getString("child");
-          if(child.equals("ul") == true) {
-             responseHandler = new ResponseHandler("http://localhost:8000/api/websites/" + inputHandler.year + "/elements/ul/children", this);
-             response = responseHandler.getResponseBody();
-             //println(response);
-             
-             for (int j = 0; j < response.length; j++) {
-                // Remove array brackets and every object's final curly bracket
-                formattedResponse = responseHandler.splitEndBracketAndComma(response[i]);
- 
-                for(int l = 0; l < formattedResponse.length; l++) {
-                  // Re-append last curly bracket to make them JSON parsable
-                  obj = parseJSONObject(formattedResponse[l].concat("}"));
-                  println(obj);
-                  
-                  childFrequencies = obj.getInt("child_frequency");
-                }
-             }
-          }
-        }
-      }
-    }
-      
-    //print(response);
+  
+  /**
+   * getElementSiblings
+   * 
+   * 
+   */
+  public String [] getElementSiblings(String element) {
+    
+    ResponseHandler responseHandler;
+    responseHandler = new ResponseHandler("http://localhost:8000/api/websites/" + inputHandler.year + "/elements/" + element + "/siblings", this);
+    return response = responseHandler.getResponseBody();
+    
   }
   
   
@@ -317,13 +308,9 @@ import processing.net.*;
    * 
    */
    public Footer[] populateFootersArray(int numberOfFooters) {
-    
-    int x = 0;
-    int y = 200;
-    
+
     if(numberOfFooters > 0) {
       for(int i = 0; i < numberOfFooters; i++) {
-         x+=100;
         // Put object in array
         footersArray[i] = new Footer();
       }
@@ -347,6 +334,8 @@ import processing.net.*;
         img.display();
     }
   }
+  
+  
   
   /**
    * drawLinkElements
@@ -381,25 +370,68 @@ import processing.net.*;
    */
   public void drawNavElements() {
     
-    int percent = (int)(childFrequencies / 100)*10;
+
+    if(numberOfNavs > 0) {
+      String[] response = getElementChildren("nav");
+      
+      for (int i = 0; i < response.length; i++) {
     
-    int randX = int(random(1024));
-    int randY = int(random(0, 100));
-  
-    for(int i = 0; i < percent; i++) {
-      randX += 100;
-      randY += 10;
-      if(randX > 1020) {
-        randX -= 100;
-      }
-      if(randY > 100) {
-        randY -= 10;
+        // Remove array brackets and every object's final curly bracket
+        String[] formattedResponse = responseHandler.splitEndBracketAndComma(response[i]);
+        
+        for(int k = 0; k < formattedResponse.length; k++) {
+          // Re-append last curly bracket to make them JSON parsable
+          JSONObject obj = parseJSONObject(formattedResponse[k].concat("}"));
+          
+          if (obj == null) {
+            println("JSONObject could not be parsed");
+          } else {
+            String child = obj.getString("child");
+            if(child.equals("ul") == true) {
+               responseHandler = new ResponseHandler("http://localhost:8000/api/websites/" + inputHandler.year + "/elements/ul/children", this);
+               response = responseHandler.getResponseBody();
+               //println(response);
+               
+               for (int j = 0; j < response.length; j++) {
+                  // Remove array brackets and every object's final curly bracket
+                  formattedResponse = responseHandler.splitEndBracketAndComma(response[i]);
+   
+                  for(int l = 0; l < formattedResponse.length; l++) {
+                    // Re-append last curly bracket to make them JSON parsable
+                    obj = parseJSONObject(formattedResponse[l].concat("}"));
+                    
+                    navLinksArray = obj.getInt("child_frequency");
+                  }
+               }
+            }
+          }
+        }
       }
       
-      Nav n = new Nav(randX, randY);
-      n.display();
-    }
+      
+      int percentOfNavLinksArray = (int)(navLinksArray / 100) * 10;
+      
+      int randX = int(random(1020));
+      int randY = int(random(10, 100));
+      
+      for(int i = 0; i < percentOfNavLinksArray; i++) {
+        randX += 100;
+        randY += 10;
+        if(randX > 1020) {
+          randX -= 100;
+        }
+        if(randY > 100) {
+          randY -= 10;
+        }
+        
+        Nav n = new Nav(randX, randY);
+        n.display();
+      }
     
+   } else {
+     print("Empty 'images' array!");
+   }
+   
   }
   
   
@@ -415,17 +447,4 @@ import processing.net.*;
     }
   }
   
-  
-  /**
-   * getSiblings
-   *
-   * 
-   */
-  public void getSiblings() {
-    
-    //for(Sibling s : siblingsArray) {
-    //  s.display();
-    //}
-  }
- 
 }

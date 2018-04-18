@@ -6,12 +6,10 @@
 
 class Link {
   float x,y;
-  int randX = int(random(1024));
-  int randY = int(random(100, 600));
-  
+
   Link(float x_, float y_) {
-    x = randX;
-    y = randY;
+    x = x_;
+    y = y_;
   }
   
   /**

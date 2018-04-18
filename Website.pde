@@ -79,7 +79,7 @@ class Website {
     
     //elementsHandler.drawImageElements();
     //elementsHandler.drawLinkElements();
-    //elementsHandler.drawParagraphElements();
+    elementsHandler.drawParagraphElements();
   }
   
   

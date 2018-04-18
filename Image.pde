@@ -11,11 +11,39 @@ class Image {
   int randY = int(random(100, 600));
   
   
-  
+  /**
+   * Constructor
+   * 
+   * 
+   */
   Image(float x_, float y_) {
     x = randX;
     y = randY;
   }
+  
+  
+  /**
+   * getX
+   * 
+   * 
+   */
+  public float getX() {
+    
+    return x;
+  }
+  
+  
+  
+  /**
+   * getY
+   * 
+   * 
+   */
+  public float getY() {
+    
+    return y;
+  }
+  
   
   /**
    * display
