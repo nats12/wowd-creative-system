@@ -7,8 +7,8 @@
  
 class Image {
   float x,y;
-  int randX = int(random(1024));
-  int randY = int(random(100, 600));
+  int imageWidth;
+  int imageHeight;
   
   
   /**
@@ -16,9 +16,11 @@ class Image {
    * 
    * 
    */
-  Image(float x_, float y_) {
-    x = randX;
-    y = randY;
+  Image(float x_, float y_, int _width, int _height) {
+    x = x_;
+    y = y_;
+    imageWidth = _width;
+    imageHeight = _height;
   }
   
   
@@ -57,6 +59,6 @@ class Image {
     stroke(0);
     strokeWeight(1);
     noFill();
-    image(img, x, y, 100, 100);
+    image(img, x, y, imageWidth, imageHeight);
   }
 }

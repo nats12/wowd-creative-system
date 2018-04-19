@@ -77,7 +77,7 @@ class Website {
     //fill(#336699);
     rect(midX, midY, midWidth, midHeight);
     
-    //elementsHandler.drawImageElements();
+    elementsHandler.drawImageElements();
     //elementsHandler.drawLinkElements();
     elementsHandler.drawParagraphElements();
   }

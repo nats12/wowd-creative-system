@@ -7,7 +7,7 @@ import processing.net.*;
  */
  class ElementsHandler {
   
-   Image[] imagesArray;
+   //Image[] imagesArray;
    //Link[] linksArray;
    //Paragraph[] paragraphsArray;
    Footer[] footersArray;
@@ -15,9 +15,11 @@ import processing.net.*;
    int numberOfNavs;
    int numberOfParagraphs;
    int numberOfLinks;
+   int numberOfImages;
    int navLinksArray;
    
    ArrayList<Paragraph> paragraphsArray = new ArrayList<Paragraph>();
+   ArrayList<Image> imagesArray = new ArrayList<Image>();
    ArrayList<Link> linksArray = new ArrayList<Link>();
    ArrayList<Sibling> siblingsArray = new ArrayList<Sibling>();
   
@@ -39,13 +41,13 @@ import processing.net.*;
     
     
       
-      int numberOfImages = getNumberOfImagesInObject(object);
+      numberOfImages = getNumberOfImagesInObject(object);
       numberOfLinks = getNumberOfLinksInObject(object);
       numberOfParagraphs = getNumberOfParagraphsInObject(object);
       numberOfNavs = getNav(object);
       int numberOfFooters = getFooter(object);
   
-      imagesArray = new Image[numberOfImages]; 
+      //imagesArray = new Image[numberOfImages]; 
       //linksArray = new Link[numberOfLinks]; 
       //paragraphsArray = new Paragraph[numberOfParagraphs]; 
       footersArray = new Footer[numberOfFooters];
@@ -162,8 +164,6 @@ import processing.net.*;
    */
    public ArrayList<Paragraph> populateParagraphsArray() {
    
-    int x = 0;
-    int y = 30;
     int paragraphs = 0;
     int percentOfParagraphsArray = (int)(numberOfParagraphs / 100) * 10;
      
@@ -172,38 +172,61 @@ import processing.net.*;
      } else {
        paragraphs = numberOfParagraphs;
      }
-      
-    //String[] siblings = getElementSiblings("p");
-    int randX = int(random(10, 500));
-    int randY = int(random(110, 600));
     
- 
-    int textWidth = int(random(50, 510));
+    int textWidth = int(random(300, 1020));
     int textHeight = int(random(100));
-        
+    
+    //String[] siblings = getElementSiblings("p");
+    int randX = int(random(30, 450));
+    int randY = 110;
+    
+    int tempX = randX;
+    int tempY = randY;
+   
     //println(paragraphs);
     if(paragraphs > 0) {
       for(int k = 0; k < paragraphs; k++) {
         
-        if(parseInt(inputHandler.year) > 2010) {
-          randX += 200;
-          randY += 100;
-        } else {
-          randX = 10;
-          randY = 110;
-        }
+   
+        // 600 - size of mid section / 
+
+        //if(parseInt(inputHandler.year) > 2010) {
+        //  randX += 200;
+        //  randY += 100;
+        //} else {
+        //  randX = 30;
+        //  randY = 110;
+          
+          //randY += 30;
+        //}
         
-        if(randX > 1020) {
-          randX -= 510;
+        println("y:");
+        println(randY);
+        
+        println("text height:");
+        println(textHeight);
+        
+        randY += textHeight;
+        
+        tempY = randY;
+        
+        println("temp:");
+        println(tempY);
+        println("new randy:");
+        println(randY);
+  
+        if(randX + textWidth > 1020) {
+          int newX = (randX + textWidth) - 1020;
+          randX -= newX;
         }
         if((randY + textHeight) > 600) {
-          randY -= 100;
+          randY -= 110;
+          // Shift paragraphs to other side
+          randX = int(random(450, 1020));
         }
         
         paragraphsArray.add(new Paragraph(randX, randY, textWidth, textHeight));
 
-        // Put object in array
-        //paragraphsArray[k] = new Paragraph(x, y);
        }
      } 
 
@@ -255,21 +278,64 @@ import processing.net.*;
    * 
    * 
    */
-   public Image[] populateImagesArray(int numberOfImages) {
+   public ArrayList<Image> populateImagesArray(int numberOfImages) {
     
     int x = 0;
     int y = 200;
 
-    if(numberOfImages > 0) {
-      for(int i = 0; i < numberOfImages; i++) {
-         x+=100;
-        // Put object in array
-        imagesArray[i] = new Image(x, y);
-      }
-    } else {
-      print("Empty 'images' array!");
-    }
+    int images = 0;
+    int percentOfImagesArray = (int)(numberOfImages / 100) * 10;
+     
+     if(numberOfParagraphs > 15) {
+       images = percentOfImagesArray;
+     } else {
+       images = numberOfParagraphs;
+     }
     
+    int imageWidth = int(random(100));
+    int imageHeight = int(random(100));
+    
+    int randX = int(random(30, 450));
+    int randY = 110;
+    
+    int tempX = randX;
+    int tempY = randY;
+   
+    //println(paragraphs);
+    if(images > 0) {
+      for(int k = 0; k < images; k++) {
+        
+   
+        // 600 - size of mid section / 
+
+        //if(parseInt(inputHandler.year) > 2010) {
+        //  randX += 200;
+        //  randY += 100;
+        //} else {
+        //  randX = 30;
+        //  randY = 110;
+          
+          //randY += 30;
+        //}
+        
+        randY += imageHeight;
+        
+        if(randX + imageWidth > 1020) {
+          int newX = (randX + imageWidth) - 1020;
+          randX -= newX;
+        }
+        if((randY + imageHeight) > 600) {
+          randY -= 110;
+          // Shift paragraphs to other side
+          randX = int(random(450, 1020));
+        }
+        
+        imagesArray.add(new Image(randX, randY, imageWidth, imageHeight));
+
+       }
+     } 
+     
+
      return imagesArray;
   }
   
