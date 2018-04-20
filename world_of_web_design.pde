@@ -16,8 +16,15 @@ Website website;
 
 String[] response;
 
-int windowWidth = 1024;
-int windowHeight = 768;
+// Button variables
+  
+int buttonX, buttonY;       
+int buttonSize = 90;    
+color buttonColor;
+color buttonHighlight;
+color currentColor;
+
+boolean buttonOver = false;
 
 /**
  * setup
@@ -26,9 +33,7 @@ int windowHeight = 768;
  */
 void setup() {
   size(1024, 768);
-  //insets = frame.getInsets();
-  surface.setResizable(true);
-
+ 
   f = createFont("Arial", 16);
   
   elementsHandler = new ElementsHandler();
@@ -37,7 +42,13 @@ void setup() {
   website = new Website(elementsHandler);
   
   response = responseHandler.getResponseBody();
-
+  
+  buttonX = 100;
+  buttonY = 50;
+  buttonColor = color(0);
+  buttonHighlight = color(51);
+  currentColor = color(102);
+    
   // Stop draw function from looping once year has been set
   noLoop();
 }
@@ -56,8 +67,10 @@ void draw() {
   } else {
     responseHandler.formatResponse(response, inputHandler.year);
     drawWebsiteDesign();
+    // Saves each frame as line-000001.png, line-000002.png, etc.
     saveFrame("line-######.png");
   }
+  
 }
 
 
@@ -74,7 +87,7 @@ void draw() {
     website.topSection();
     website.midSection();
     website.bottomSection();
-    
+   
   }
   
   
@@ -95,10 +108,13 @@ void draw() {
   void keyPressed() {
    
     inputHandler.processUserInput(); 
-    
     // Keep drawing until year has been given
     redraw();
+    
+    //inputHandler.year = "";
+    
+    //delay(5000);
+    
+    //redraw();
+   
   }
-
-
-  

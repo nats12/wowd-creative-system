@@ -7,9 +7,6 @@ import processing.net.*;
  */
  class ElementsHandler {
   
-   //Image[] imagesArray;
-   //Link[] linksArray;
-   //Paragraph[] paragraphsArray;
    Footer[] footersArray;
    
    int numberOfNavs;
@@ -17,6 +14,11 @@ import processing.net.*;
    int numberOfLinks;
    int numberOfImages;
    int navLinksArray;
+   
+   int occupiedX;
+   int occupiedY;
+   int occupiedWidth;
+   int occupiedHeight;
    
    ArrayList<Paragraph> paragraphsArray = new ArrayList<Paragraph>();
    ArrayList<Image> imagesArray = new ArrayList<Image>();
@@ -46,13 +48,10 @@ import processing.net.*;
       numberOfParagraphs = getNumberOfParagraphsInObject(object);
       numberOfNavs = getNav(object);
       int numberOfFooters = getFooter(object);
-  
-      //imagesArray = new Image[numberOfImages]; 
-      //linksArray = new Link[numberOfLinks]; 
-      //paragraphsArray = new Paragraph[numberOfParagraphs]; 
+ 
       footersArray = new Footer[numberOfFooters];
 
-      populateImagesArray(numberOfImages);
+      populateImagesArray();
       populateLinksArray();
       //populateSiblingsArray("p");
       populateParagraphsArray();
@@ -165,7 +164,7 @@ import processing.net.*;
    public ArrayList<Paragraph> populateParagraphsArray() {
    
     int paragraphs = 0;
-    int percentOfParagraphsArray = (int)(numberOfParagraphs / 100) * 10;
+    int percentOfParagraphsArray = (int)(numberOfParagraphs / 100) * 2;
      
      if(numberOfParagraphs > 15) {
        paragraphs = percentOfParagraphsArray;
@@ -176,19 +175,19 @@ import processing.net.*;
     int textWidth = int(random(300, 1020));
     int textHeight = int(random(100));
     
+    
     //String[] siblings = getElementSiblings("p");
     int randX = int(random(30, 450));
     int randY = 110;
-    
-    int tempX = randX;
-    int tempY = randY;
-   
-    //println(paragraphs);
+
+
     if(paragraphs > 0) {
       for(int k = 0; k < paragraphs; k++) {
         
-   
-        // 600 - size of mid section / 
+        //if (randX + textWidth > occupiedX + occupiedWidth) {
+        //  // this element will overlap with an existing one
+        //  randX = int(random(30, 450));
+        //}
 
         //if(parseInt(inputHandler.year) > 2010) {
         //  randX += 200;
@@ -200,20 +199,14 @@ import processing.net.*;
           //randY += 30;
         //}
         
-        println("y:");
-        println(randY);
-        
-        println("text height:");
-        println(textHeight);
-        
+
         randY += textHeight;
         
-        tempY = randY;
         
-        println("temp:");
-        println(tempY);
-        println("new randy:");
-        println(randY);
+        //println("temp:");
+        //println(tempY);
+        //println("new randy:");
+        //println(randY);
   
         if(randX + textWidth > 1020) {
           int newX = (randX + textWidth) - 1020;
@@ -224,6 +217,12 @@ import processing.net.*;
           // Shift paragraphs to other side
           randX = int(random(450, 1020));
         }
+        
+        //occupiedX = randX;
+        //occupiedY = randY;
+        
+        //occupiedWidth = textWidth;
+        //occupiedHeight = textHeight;
         
         paragraphsArray.add(new Paragraph(randX, randY, textWidth, textHeight));
 
@@ -245,7 +244,7 @@ import processing.net.*;
     int y = 30;
     int links = 0;
     
-    int percentOfLinksArray = (int)(numberOfLinks / 100) * 10;
+    int percentOfLinksArray = (int)(numberOfLinks / 100) * 2;
      
      if(numberOfLinks > 15) {
        links = percentOfLinksArray;
@@ -278,34 +277,36 @@ import processing.net.*;
    * 
    * 
    */
-   public ArrayList<Image> populateImagesArray(int numberOfImages) {
+   public ArrayList<Image> populateImagesArray() {
     
     int x = 0;
     int y = 200;
 
     int images = 0;
-    int percentOfImagesArray = (int)(numberOfImages / 100) * 10;
+    int percentOfImagesArray = (int)(numberOfImages / 100) * 2;
      
-     if(numberOfParagraphs > 15) {
+     if(numberOfImages > 15) {
        images = percentOfImagesArray;
      } else {
-       images = numberOfParagraphs;
+       images = numberOfImages;
      }
     
-    int imageWidth = int(random(100));
-    int imageHeight = int(random(100));
     
-    int randX = int(random(30, 450));
+    int imageWidth = int(random(150, 200));
+    int imageHeight = int(random(150, 200));
+    
+    int randX = int(random(100, 450));
     int randY = 110;
     
-    int tempX = randX;
-    int tempY = randY;
+    //int tempX = randX;
+    //int tempY = randY;
    
     //println(paragraphs);
     if(images > 0) {
       for(int k = 0; k < images; k++) {
-        
-   
+       
+       
+       
         // 600 - size of mid section / 
 
         //if(parseInt(inputHandler.year) > 2010) {
@@ -507,9 +508,11 @@ import processing.net.*;
    * 
    */
   public void drawFooter() {
-
-    for (Footer f : footersArray) {
-      f.display();
+    
+    if(footersArray.length != 0) {
+      for (Footer f : footersArray) {
+        f.display();
+      }
     }
   }
   

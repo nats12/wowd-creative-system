@@ -64,7 +64,7 @@ class InputHandler {
     int indent = 25;
     textFont(f);
     fill(0);
-    text("You would like to see a typical website design from the year: ", indent, 170);
+    text("You would like to see a website design inspired by those from the year: ", indent, 170);
     text("Input: " + typing,indent,190);
    }
   

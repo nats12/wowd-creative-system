@@ -7,6 +7,7 @@ import processing.net.*;
  */
 class Website {
  
+  // Website structure variables
   int topX;
   int topY;
   int topWidth;
@@ -21,6 +22,7 @@ class Website {
   int bottomY;
   int bottomWidth;
   int bottomHeight;
+
   
   ElementsHandler elementsHandler;
  
@@ -78,7 +80,7 @@ class Website {
     rect(midX, midY, midWidth, midHeight);
     
     elementsHandler.drawImageElements();
-    //elementsHandler.drawLinkElements();
+    elementsHandler.drawLinkElements();
     elementsHandler.drawParagraphElements();
   }
   
@@ -98,20 +100,4 @@ class Website {
     elementsHandler.drawFooter();
   }
   
-  
-  
-  /**
-   * adjustSections
-   *
-   *
-   */
-  void adjustSections() {
-   
-    topY += 1;
-    midY += 1;
-    bottomY += 1;
-    
-    redraw();  
-  }
-    
 }

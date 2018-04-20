@@ -20,7 +20,8 @@ class Link {
   void display() {
     stroke(0);
     fill(0);
-    String s = "Lorem Impsum";
+    String s = "Href link";
+    fill(0, 102, 153);
     text(s, x, y);
    
   }
