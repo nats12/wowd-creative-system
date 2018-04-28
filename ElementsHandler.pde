@@ -15,10 +15,11 @@ import processing.net.*;
    int numberOfImages;
    int navLinksArray;
    
-   int occupiedX;
-   int occupiedY;
-   int occupiedWidth;
-   int occupiedHeight;
+   // Could be used to optimise the positions of elements without overlapping.
+   //int occupiedX;
+   //int occupiedY;
+   //int occupiedWidth;
+   //int occupiedHeight;
    
    ArrayList<Paragraph> paragraphsArray = new ArrayList<Paragraph>();
    ArrayList<Image> imagesArray = new ArrayList<Image>();
@@ -28,21 +29,21 @@ import processing.net.*;
 
   /**
    * Constructor
-   * 
-   * 
+   * @param N/A
+   * @return {void} N/A  
    */ 
    ElementsHandler() {}
     
 
   /**
    * getWebsiteElementCount
-   * 
-   * 
+   * Calls functions to obtain the number of each element in each website.
+   * Calls functions that populates element arrays ready for drawing.
+   * @param JSONObject object 
+   * @return {void} N/A 
    */
    public void getWebsiteElementCount(JSONObject object) {
     
-    
-      
       numberOfImages = getNumberOfImagesInObject(object);
       numberOfLinks = getNumberOfLinksInObject(object);
       numberOfParagraphs = getNumberOfParagraphsInObject(object);
@@ -56,15 +57,14 @@ import processing.net.*;
       //populateSiblingsArray("p");
       populateParagraphsArray();
       populateFootersArray(numberOfFooters);
-    
-    
    }
   
   
   /**
    * getNumberOfParagraphsInObject
-   * 
-   * 
+   * Gets the number of "p" element appearances in a website
+   * @param JSONObject object
+   * @return {int} The number of paragraphs in a website 
    */
    int getNumberOfParagraphsInObject(JSONObject object) {
 
@@ -74,8 +74,9 @@ import processing.net.*;
   
   /**
    * getNumberOfImagesInObject
-   * 
-   * 
+   * Gets the number of "img" element appearances in a website
+   * @param JSONObject object
+   * @return {int} The number of image elements in a website  
    */
    int getNumberOfImagesInObject(JSONObject object) {
 
@@ -86,8 +87,9 @@ import processing.net.*;
   
   /**
    * getNumberOfLinksInObject
-   * 
-   * 
+   * Gets the number of "a" element appearances in a website
+   * @param JSONObject object
+   * @return {int} The number of link elements in a website  
    */
    int getNumberOfLinksInObject(JSONObject object) {
     
@@ -97,8 +99,9 @@ import processing.net.*;
   
   /**
    * getNav
-   * 
-   * 
+   * Gets the "nav" element in a website
+   * @param JSONObject object
+   * @return {int} The number of navigation elements in a website  
    */
    int getNav(JSONObject object) {
     
@@ -109,8 +112,9 @@ import processing.net.*;
    
    /**
    * getFooter
-   * 
-   * 
+   * Gets the "footer" in a website
+   * @param JSONObject object
+   * @return {int} The number of footer elements in a website   
    */
    int getFooter(JSONObject object) {
     
@@ -120,8 +124,9 @@ import processing.net.*;
   
   /**
    * populateSiblingsArray
-   * 
-   * 
+   * Finds the sibling of an element and creates a Sibling object
+   * @param String element
+   * @return {ArrayList} siblingsArray An array populated with Sibling objects  
    */
   public ArrayList<Sibling> populateSiblingsArray(String element) {
     
@@ -158,8 +163,10 @@ import processing.net.*;
   
   /**
    * populateParagraphsArray
-   * 
-   * 
+   * Generates random x and y positions and width and height values for Paragraph objects
+   * Populates the paragraphsArray with Paragraph Objects
+   * @param N/A
+   * @return {ArrayList} paragraphsArray An array populated with Paragraph objects  
    */
    public ArrayList<Paragraph> populateParagraphsArray() {
    
@@ -235,13 +242,13 @@ import processing.net.*;
   
   /**
    * populateLinksArray
-   * 
-   * 
+   * Generates random x and y positions for Link objects
+   * Populates the populateLinksArray with Link Objects
+   * @param N/A
+   * @return {ArrayList} populateLinksArray An array populated with Link objects  
    */
    public ArrayList<Link> populateLinksArray() {
-   
-    int x = 0;
-    int y = 30;
+  
     int links = 0;
     
     int percentOfLinksArray = (int)(numberOfLinks / 100) * 2;
@@ -252,7 +259,6 @@ import processing.net.*;
        links = numberOfLinks;
      }
       
-    print(numberOfLinks);
     if(links > 0) {
       for(int k = 0; k < links; k++) {
         int randX = int(random(0));
@@ -274,8 +280,10 @@ import processing.net.*;
   
   /**
    * populateImagesArray
-   * 
-   * 
+   * Generates random x and y positions and width and height values for Image objects
+   * Populates the imagesArray with Image objects
+   * @param N/A
+   * @return {ArrayList} imagesArray An array populated with Image objects  
    */
    public ArrayList<Image> populateImagesArray() {
     
@@ -298,27 +306,9 @@ import processing.net.*;
     int randX = int(random(100, 450));
     int randY = 110;
     
-    //int tempX = randX;
-    //int tempY = randY;
-   
-    //println(paragraphs);
     if(images > 0) {
       for(int k = 0; k < images; k++) {
        
-       
-       
-        // 600 - size of mid section / 
-
-        //if(parseInt(inputHandler.year) > 2010) {
-        //  randX += 200;
-        //  randY += 100;
-        //} else {
-        //  randX = 30;
-        //  randY = 110;
-          
-          //randY += 30;
-        //}
-        
         randY += imageHeight;
         
         if(randX + imageWidth > 1020) {
@@ -330,6 +320,16 @@ import processing.net.*;
           // Shift paragraphs to other side
           randX = int(random(450, 1020));
         }
+        
+        println("IMAGE");
+        println("Random x: ");
+        println(randX);
+        println("Random y: ");
+        println(randY);
+        println("Random width: ");
+        println(imageWidth);
+        println("Random height: ");
+        println(imageHeight);
         
         imagesArray.add(new Image(randX, randY, imageWidth, imageHeight));
 
@@ -344,8 +344,9 @@ import processing.net.*;
   
   /**
    * getObjectChildren
-   * 
-   * 
+   * Sends a HTTP request to an API endpoint that fetches all children elements of an element
+   * @param element 
+   * @return {String[]} response A string array containing an element's child elements
    */
   public String[] getElementChildren(String element) {
 
@@ -357,8 +358,9 @@ import processing.net.*;
   
   /**
    * getElementSiblings
-   * 
-   * 
+   * Sends a HTTP request to an API endpoint that fetches all sibling elements of an element
+   * @param element 
+   * @return {String[]} response A string array containing an element's sibling elements 
    */
   public String [] getElementSiblings(String element) {
     
@@ -371,8 +373,9 @@ import processing.net.*;
   
   /**
    * populateFootersArray
-   * 
-   * 
+   * Populates the footersArray with Footer objects
+   * @param N/A
+   * @return {ArrayList} footersArray An array populated with Footer objects  
    */
    public Footer[] populateFootersArray(int numberOfFooters) {
 
@@ -392,8 +395,9 @@ import processing.net.*;
   
   /**
    * drawImageElements
-   * 
-   * 
+   * Calls the Image display function for every Image object in the imagesArray
+   * @param N/A
+   * @return {void} N/A
    */
   public void drawImageElements() {
     
@@ -406,8 +410,9 @@ import processing.net.*;
   
   /**
    * drawLinkElements
-   * 
-   * 
+   * Calls the Link display function for every Link object in the linksArray
+   * @param N/A
+   * @return {void} N/A 
    */
   public void drawLinkElements() {
     
@@ -419,8 +424,9 @@ import processing.net.*;
   
   /**
    * drawParagraphElements
-   * 
-   * 
+   * Calls the Paragraph display function for every Paragraph object in the paragraphsArray
+   * @param N/A
+   * @return {void} N/A  
    */
   public void drawParagraphElements() {
     
@@ -432,8 +438,12 @@ import processing.net.*;
   
   /**
    * drawNavElements
-   * 
-   * 
+   * Formats the response into a JSON object
+   * Fetches the child elements of "nav", fetches the child elements of "ul" (if it happens to be a child of nav) to assert the number of links in the menu
+   * Generates random x and y axis positions for the "nav" links
+   * Calls the Nav display function 
+   * @param N/A
+   * @return {void} N/A  
    */
   public void drawNavElements() {
     
@@ -457,7 +467,6 @@ import processing.net.*;
             if(child.equals("ul") == true) {
                responseHandler = new ResponseHandler("http://localhost:8000/api/websites/" + inputHandler.year + "/elements/ul/children", this);
                response = responseHandler.getResponseBody();
-               //println(response);
                
                for (int j = 0; j < response.length; j++) {
                   // Remove array brackets and every object's final curly bracket
@@ -504,8 +513,9 @@ import processing.net.*;
   
   /**
    * drawFooterElements
-   * 
-   * 
+   * Calls the Footer display function for every Footer object in the footersArray
+   * @param N/A
+   * @return {void} N/A 
    */
   public void drawFooter() {
     

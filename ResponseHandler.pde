@@ -12,8 +12,9 @@ class ResponseHandler {
  
   /**
    * Constructor
-   * 
-   * 
+   * @param String url The url used in the HTTP request
+   * @param ElementsHandler elHandler An ElementsHandler object
+   * @return {void} N/A 
    */ 
   ResponseHandler(String url, ElementsHandler elHandler) {
     requestUrl = url;
@@ -23,8 +24,9 @@ class ResponseHandler {
   
   /**
    * getUrl
-   * 
-   * 
+   * Returns the url used in the HTTP request
+   * @param N/A
+   * @return {String} requestUrl The request url (one of the API endpoints) 
    */ 
   String getUrl() {
     
@@ -34,8 +36,9 @@ class ResponseHandler {
   
   /**
    * getResponseBody
-   * 
-   * 
+   * Returns the body of the HTTP request 
+   * @param N/A
+   * @return {String} The body of the HTTP request containing the database data
    */
   String[] getResponseBody() {
   
@@ -46,8 +49,10 @@ class ResponseHandler {
   
   /**
    * formatResponse
-   * 
-   * 
+   * Formats the response string into a JSONObject for parsing of individual objects 
+   * @param String response The HTTP request response
+   * @param String year The user's input 
+   * @return {void} N/A
    */
   void formatResponse(String[] response, String year) {
    
@@ -75,8 +80,9 @@ class ResponseHandler {
   
   /**
    * splitBrackets
-   * 
-   * 
+   * Splits the HTTP response body "}" brackets 
+   * @param String responseObject The HTTP response body
+   * @return {String[]} The HTTP response body without "}" brackets 
    */
   String[] splitEndBracketAndComma(String responseObject) {
     

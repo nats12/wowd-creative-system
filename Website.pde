@@ -28,8 +28,8 @@ class Website {
  
   /**
    * Constructor
-   * 
-   * 
+   * @param ElementsHandler elHandler An ElementsHandler object
+   * @return {void} N/A
    */ 
   Website(ElementsHandler elHandler) {
     topX = 0;
@@ -54,13 +54,15 @@ class Website {
   
   /**
    * topSection
-   * 
-   * 
+   * Draws a rectangle for the top section of the frame
+   * Draws nav elements
+   * @param N/A
+   * @return {void} N/A 
    */ 
   void topSection() {
     
     noFill();
-    //fill(#CCFFAA);
+
     rect(topX, topY, topWidth, topHeight);
     
     elementsHandler.drawNavElements();
@@ -70,13 +72,15 @@ class Website {
   
   /**
    * midSection
-   * 
-   * 
+   * Draws a rectangle for the middle section of the frame
+   * Draws image, link and paragraph elements
+   * @param N/A
+   * @return {void} N/A   
    */ 
   void midSection() {
    
     noFill();
-    //fill(#336699);
+
     rect(midX, midY, midWidth, midHeight);
     
     elementsHandler.drawImageElements();
@@ -88,13 +92,15 @@ class Website {
   
   /**
    * bottomSection
-   * 
-   * 
+   * Draws a rectangle for the bottom section of the frame
+   * Draws footer elements
+   * @param N/A
+   * @return {void} N/A  
    */ 
   void bottomSection() {
     
     noFill();
-    //fill(#ff0000);
+
     rect(bottomX, bottomY, bottomWidth, bottomHeight);
     
     elementsHandler.drawFooter();

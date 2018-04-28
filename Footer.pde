@@ -11,7 +11,11 @@ class Footer {
   int randX = int(random(1024));
   int randY = int(random(710, 767));
  
-  
+  /**
+   * Constructor
+   * @param N/A
+   * @return {void} N/A 
+   */ 
   Footer() {
     x = randX;
     y = randY;

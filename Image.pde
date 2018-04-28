@@ -13,8 +13,11 @@ class Image {
   
   /**
    * Constructor
-   * 
-   * 
+   * @param float x_ The image's x axis position
+   * @param float y_ The image's y axis position
+   * @param int width_ The image's width
+   * @param int height_ The image's height
+   * @return {void} N/A 
    */
   Image(float x_, float y_, int _width, int _height) {
     x = x_;
@@ -26,8 +29,9 @@ class Image {
   
   /**
    * getX
-   * 
-   * 
+   * Returns the x axis value
+   * @param N/A
+   * @return {float} x The x axis 
    */
   public float getX() {
     
@@ -38,8 +42,9 @@ class Image {
   
   /**
    * getY
-   * 
-   * 
+   * Returns the y axis value
+   * @param N/A
+   * @return {float} y The y axis  
    */
   public float getY() {
     

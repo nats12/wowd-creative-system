@@ -16,15 +16,17 @@ class InputHandler {
 
   /**
    * Constructor
-   * 
-   * 
+   * @param N/A
+   * @return {void} N/A  
    */ 
   InputHandler() {}
   
   
   /**
    * getYear
-   * 
+   * Returns the year input by the user
+   * @param N/A
+   * @return String year The year input by the user
    * 
    */ 
   String getYear() {
@@ -35,8 +37,9 @@ class InputHandler {
   
   /**
    * keyPressed
-   * 
-   * 
+   * Listens for key presses and, specifically the return and backspace keys to adjust the "year" variable accordingly
+   * @param N/A
+   * @return {void} N/A
    */
   void processUserInput() {
     // If the return key is pressed, save the String and clear it
@@ -44,6 +47,7 @@ class InputHandler {
       year = typing;
       // A String can be cleared by setting it equal to ""
       typing = ""; 
+ 
     } else if(key == '\b') {
       // If the backspace key is pressed, remove the last character from the string
       typing = typing.substring(0, typing.length() - 1);
@@ -57,8 +61,9 @@ class InputHandler {
 
   /**
    * displayUserInput
-   * 
-   * 
+   * Displays the user input frame
+   * @param N/A
+   * @return {void} N/A
    */ 
   void displayUserInput() {
     int indent = 25;

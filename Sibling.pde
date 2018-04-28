@@ -12,7 +12,9 @@ import processing.net.*;
   
   /**
    * Constructor
-   * 
+   * @param String sibling The sibling element
+   * @param int frequency The number of times the sibling element appears 
+   * @return {void} N/A
    * 
    */ 
    Sibling(String sibling, int frequency) {
