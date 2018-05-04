@@ -14,7 +14,7 @@ ElementsHandler elementsHandler;
 InputHandler inputHandler;
 Website website;
 
-String[] response;
+JSONArray response;
 
 
 /**
@@ -49,6 +49,8 @@ void draw() {
   responseHandler = new ResponseHandler("http://localhost:8000/api/websites/new", elementsHandler);
   response = responseHandler.getResponseBody();
   
+  print(response);
+
   if(inputHandler.year == "") {
     inputHandler.displayUserInput();
   } else {

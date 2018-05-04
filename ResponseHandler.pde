@@ -40,9 +40,9 @@ class ResponseHandler {
    * @param N/A
    * @return {String} The body of the HTTP request containing the database data
    */
-  String[] getResponseBody() {
+  JSONArray getResponseBody() {
   
-    return loadStrings(requestUrl);
+    return loadJSONArray("data.txt");
   }
   
   
@@ -54,16 +54,11 @@ class ResponseHandler {
    * @param String year The user's input 
    * @return {void} N/A
    */
-  void formatResponse(String[] response, String year) {
+  void formatResponse(JSONArray response, String year) {
    
-    for (int i = 0; i < response.length; i++) {
-      // Remove array brackets and every object's final curly bracket
-      String[] formattedResponse = splitEndBracketAndComma(response[i]);
+    for (int i = 0; i < response.size(); i++) {
       
-      for(int k = 0; k < formattedResponse.length-1; k++) {
-        // Re-append last curly bracket to make them JSON parsable
-        JSONObject obj = parseJSONObject(formattedResponse[k].concat("}"));
-
+        JSONObject obj = response.getJSONObject(i);
         if (obj == null) {
           println("JSONObject could not be parsed");
         } else {
@@ -72,7 +67,6 @@ class ResponseHandler {
             elementsHandler.getWebsiteElementCount(obj);
           } 
         }
-      }
     }
   }
   
@@ -85,7 +79,7 @@ class ResponseHandler {
    * @return {String[]} The HTTP response body without "}" brackets 
    */
   String[] splitEndBracketAndComma(String responseObject) {
-    
-    return responseObject.substring(1, responseObject.length()-1).split("},"); 
+    //println(responseObject.substring(1, responseObject.length()).split("},"));
+    return responseObject.substring(1, responseObject.length()).split("},"); 
   }
 }
