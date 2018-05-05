@@ -13,6 +13,8 @@ class InputHandler {
   // Variable to store a given year
   String year = "";
   
+  // For invalid year inputs
+  boolean error = false;
 
   /**
    * Constructor
@@ -45,9 +47,15 @@ class InputHandler {
     // If the return key is pressed, save the String and clear it
     if (key == '\n' ) {
       year = typing;
+      
+      // Check for invalid year inputs
+      if(parseInt(year) == 2002 || parseInt(year) == 2006 || parseInt(year) == 2007 || parseInt(year) == 2008 || parseInt(year) == 2009 || parseInt(year) == 2010 || parseInt(year) == 2011 || parseInt(year) == 2013 || parseInt(year) == 2014 || parseInt(year) == 2016) {
+        error = true;
+        year = "";
+      }
+      
       // A String can be cleared by setting it equal to ""
       typing = ""; 
- 
     } else if(key == '\b') {
       // If the backspace key is pressed, remove the last character from the string
       typing = typing.substring(0, typing.length() - 1);
@@ -69,8 +77,17 @@ class InputHandler {
     int indent = 25;
     textFont(f);
     fill(0);
+    textSize(16);
     text("You would like to see a website design inspired by those from the year: ", indent, 170);
-    text("Input: " + typing,indent,190);
+    textSize(12);
+    text("(Choose from: 1990, 1992, 1993, 1994, 1995, 1996, 1997, 1998, 1999, 2000, 2001, 2003, 2004, 2005, 2012, 2015, 2017)", indent, 190);
+    textSize(16);
+    text("Input: " + typing, indent, 250);
+    
+    if(error) {
+      fill(255,0,0);
+      text("Please enter a valid year from the list above!", indent, 230);
+    }
    }
   
 }

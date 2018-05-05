@@ -17,6 +17,7 @@ class ResponseHandler {
    * @return {void} N/A 
    */ 
   ResponseHandler(String url, ElementsHandler elHandler) {
+    // URL not in use in this version, see getResponseBody().
     requestUrl = url;
     elementsHandler = elHandler;
   }
@@ -79,7 +80,7 @@ class ResponseHandler {
    * @return {String[]} The HTTP response body without "}" brackets 
    */
   String[] splitEndBracketAndComma(String responseObject) {
-    //println(responseObject.substring(1, responseObject.length()).split("},"));
+
     return responseObject.substring(1, responseObject.length()).split("},"); 
   }
 }

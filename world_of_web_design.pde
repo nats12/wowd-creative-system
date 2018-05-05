@@ -46,11 +46,10 @@ void setup() {
 void draw() {
   background(255);
   
+  // URL not in use in this version, see ResponseHandler getResponseBody().
   responseHandler = new ResponseHandler("http://localhost:8000/api/websites/new", elementsHandler);
   response = responseHandler.getResponseBody();
   
-  print(response);
-
   if(inputHandler.year == "") {
     inputHandler.displayUserInput();
   } else {

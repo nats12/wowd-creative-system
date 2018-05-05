@@ -28,7 +28,7 @@ class Nav {
   void display() {
     stroke(0);
     strokeWeight(1);
-    noFill();
+    fill(0);
     String s = "Nav link";
     text(s, x, y);
   }

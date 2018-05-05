@@ -131,22 +131,29 @@ import processing.net.*;
   public ArrayList<Sibling> populateSiblingsArray(String element) {
     
     
-    JSONArray response;
+    String[] response;
     
     ResponseHandler responseHandler;
     responseHandler = new ResponseHandler("http://localhost:8000/api/websites/" + inputHandler.year + "/elements/" + element + "/siblings", this);
     response = responseHandler.getResponseBody();
    
     
-    for (int i = 0; i < response.size(); i++) {
-  
-        JSONObject obj = response.getJSONObject(i);
+    for (int i = 0; i < response.length; i++) {
+      
+      // Remove array brackets and every object's final curly bracket
+      String[] formattedResponse = responseHandler.splitEndBracketAndComma(response[i]);
+      
+       for(int k = 0; k < formattedResponse.length; k++) {
+        
+        // Re-append last curly bracket to make them JSON parsable
+        JSONObject obj = parseJSONObject(formattedResponse[k].concat("}"));
  
         String elementSibling = obj.getString("sibling");
         int elementSiblingFrequency = obj.getInt("sibling_frequency");
         
         siblingsArray.add(new Sibling(elementSibling, elementSiblingFrequency));
-
+        
+       }
     }
     
     return siblingsArray;
@@ -183,9 +190,14 @@ import processing.net.*;
 
     if(paragraphs > 0) {
       for(int k = 0; k < paragraphs; k++) {
+        
+        //if (randX + textWidth > occupiedX + occupiedWidth) {
+        //  // this element will overlap with an existing one
+        //  randX = int(random(30, 450));
+        //}
 
         randY += textHeight;
-        
+
   
         if(randX + textWidth > 1020) {
           int newX = (randX + textWidth) - 1020;
@@ -258,10 +270,7 @@ import processing.net.*;
    * @return {ArrayList} imagesArray An array populated with Image objects  
    */
    public ArrayList<Image> populateImagesArray() {
-    
-    int x = 0;
-    int y = 200;
-
+   
     int images = 0;
     int percentOfImagesArray = (int)(numberOfImages / 100) * 2;
      
@@ -292,7 +301,6 @@ import processing.net.*;
           // Shift paragraphs to other side
           randX = int(random(450, 1020));
         }
-
         
         imagesArray.add(new Image(randX, randY, imageWidth, imageHeight));
 
@@ -311,9 +319,11 @@ import processing.net.*;
    * @param element 
    * @return {String[]} response A string array containing an element's child elements
    */
-  public JSONArray getElementChildren() {
+  public String[] getElementChildren(String element) {
 
-    return loadJSONArray("data-nav-" + inputHandler.year + ".txt");
+    ResponseHandler responseHandler;
+    responseHandler = new ResponseHandler("http://localhost:8000/api/websites/" + inputHandler.year + "/elements/" + element + "/children", this);
+    return response = responseHandler.getResponseBody();
   }
   
   
@@ -323,7 +333,7 @@ import processing.net.*;
    * @param element 
    * @return {String[]} response A string array containing an element's sibling elements 
    */
-  public JSONArray getElementSiblings(String element) {
+  public String [] getElementSiblings(String element) {
     
     ResponseHandler responseHandler;
     responseHandler = new ResponseHandler("http://localhost:8000/api/websites/" + inputHandler.year + "/elements/" + element + "/siblings", this);
@@ -410,29 +420,40 @@ import processing.net.*;
     
 
     if(numberOfNavs > 0) {
-      JSONArray response = getElementChildren();
+      String[] response = getElementChildren("nav");
       
-      for (int i = 0; i < response.size(); i++) {
+      for (int i = 0; i < response.length; i++) {
     
+        // Remove array brackets and every object's final curly bracket
+        String[] formattedResponse = responseHandler.splitEndBracketAndComma(response[i]);
+        
+        for(int k = 0; k < formattedResponse.length; k++) {
           // Re-append last curly bracket to make them JSON parsable
-          JSONObject obj = response.getJSONObject(i);
+          JSONObject obj = parseJSONObject(formattedResponse[k].concat("}"));
           
           if (obj == null) {
             println("JSONObject could not be parsed");
           } else {
             String child = obj.getString("child");
-    
             if(child.equals("ul") == true) {
-             
-               response = loadJSONArray("data-ul-" + inputHandler.year + ".txt");
+               responseHandler = new ResponseHandler("http://localhost:8000/api/websites/" + inputHandler.year + "/elements/ul/children", this);
+               response = responseHandler.getResponseBody();
                
-               for (int j = 0; j < response.size(); j++) {
-                    JSONObject objChild = response.getJSONObject(j);
-                    navLinksArray = objChild.getInt("child_frequency");
+               for (int j = 0; j < response.length; j++) {
+                  // Remove array brackets and every object's final curly bracket
+                  formattedResponse = responseHandler.splitEndBracketAndComma(response[i]);
+   
+                  for(int l = 0; l < formattedResponse.length; l++) {
+                    // Re-append last curly bracket to make them JSON parsable
+                    obj = parseJSONObject(formattedResponse[l].concat("}"));
+                    
+                    navLinksArray = obj.getInt("child_frequency");
+                  }
                }
             }
           }
-    }
+        }
+      }
       
       
       int percentOfNavLinksArray = (int)(navLinksArray / 100) * 10;
@@ -468,7 +489,7 @@ import processing.net.*;
    * @return {void} N/A 
    */
   public void drawFooter() {
-
+    
     if(footersArray.length != 0) {
       for (Footer f : footersArray) {
         f.display();
