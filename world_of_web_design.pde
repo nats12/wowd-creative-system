@@ -25,6 +25,7 @@ String[] response;
 void setup() {
   size(1024, 768);
  
+  println(width, height);
   f = createFont("Arial", 16);
   
   inputHandler = new InputHandler();

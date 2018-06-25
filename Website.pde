@@ -7,7 +7,7 @@ import processing.net.*;
  */
 class Website {
  
-  int numberOfImages;
+  int responseImages;
   ArrayList<Image> imagesArray = new ArrayList<Image>();
  
   /**
@@ -25,27 +25,35 @@ class Website {
    * @param String website
    * @return {}  
    */
-   void getElementCount(JSONObject object, String element) {
-
-    numberOfImages = object.getInt(element);
-   }
- 
-  
-  /**
-   * getWebsiteElementCount
-   * Calls functions to obtain the number of each element in each website.
-   * Calls functions that populates element arrays ready for drawing.
-   * @param JSONObject object 
-   * @return {void} N/A 
-   */
-   void init(JSONObject object) {
-    
-      getElementCount(object, "img");
-      
-      populateImagesArray();
+   public void init(JSONObject website) {
+     
+     processImageElements(website, "img");
+     
    }
    
-  
+   
+   public void processImageElements(JSONObject website, String element) {
+     
+     getHTMLElementCount(website, element);
+     
+     populateImagesArray();
+   }
+   
+   
+  /**
+   * getElementCount
+   * Gets the number of times a specific element is present in a website design
+   * @param JSONObject object
+   * @param String website
+   * @return {}  
+   */
+   void getHTMLElementCount(JSONObject website, String element) {
+
+    responseImages = website.getInt(element);
+    
+   }
+ 
+   
   /**
    * drawImageElements
    * Calls the Image display function for every Image object in the imagesArray
@@ -54,8 +62,19 @@ class Website {
    */
   public void drawImageElements() {
     
+    int index = 0;
+    
     for(Image img : imagesArray) {
-        img.display();
+        
+        if(index > 0) {
+          if(imagesArray.get(index).x < (imagesArray.get(index-1).x + imagesArray.get(index-1).imageWidth)) {
+            imagesArray.get(index).x = imagesArray.get(index-1).x + imagesArray.get(index-1).imageWidth;
+            //println(imagesArray.get(index).x);
+          }
+        }
+        index++;
+        
+        img.display();  
     }
   }
   
@@ -68,52 +87,43 @@ class Website {
    * @return {ArrayList} imagesArray An array populated with Image objects  
    */
    public ArrayList<Image> populateImagesArray() {
-    
-    int x = 0;
-    int y = 200;
-
+   
     int images = 0;
-    int percentOfImagesArray = (int)(numberOfImages / 100) * 2;
-     
-     if(numberOfImages > 15) {
+    int percentOfImagesArray = (int)(responseImages / 100) * 2;
+    
+    int neighbourX = 0;
+    int neighbourY = 0;
+    
+     if(responseImages > 6) {
        images = percentOfImagesArray;
      } else {
-       images = numberOfImages;
+       images = responseImages;
      }
     
     
-    int imageWidth = int(random(150, 200));
-    int imageHeight = int(random(150, 200));
-    
-    int randX = int(random(100, 450));
-    int randY = 110;
-    
     if(images > 0) {
       for(int k = 0; k < images; k++) {
-       
-        randY += imageHeight;
         
-        if(randX + imageWidth > 1020) {
-          int newX = (randX + imageWidth) - 1020;
-          randX -= newX;
+        int imageWidth = int(random(150, 200));
+        int imageHeight = int(random(150, 200));
+        
+        int x = int(random(100, 450));
+        int y = int(random(100, 450));
+   
+        if(x > width - imageWidth) {
+          x = width - imageWidth;
         }
-        if((randY + imageHeight) > 600) {
-          randY -= 110;
-          // Shift paragraphs to other side
-          randX = int(random(450, 1020));
-        }
+
+        //if((y + imageHeight) > height) {
+        //  y -= 110;
+        //  // Shift paragraphs to other side
+        //  y = int(random(450, 1020));
+        //}
         
-        println("IMAGE");
-        println("Random x: ");
-        println(randX);
-        println("Random y: ");
-        println(randY);
-        println("Random width: ");
-        println(imageWidth);
-        println("Random height: ");
-        println(imageHeight);
-        
-        imagesArray.add(new Image(randX, randY, imageWidth, imageHeight));
+ 
+        println("Random x: " + x + ", Random y: " + y + ", Random width: " + imageWidth + ", Random height: " + imageHeight);
+
+        imagesArray.add(new Image(x, y, imageWidth, imageHeight));
 
        }
      } 
