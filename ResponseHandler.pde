@@ -10,7 +10,6 @@ class ResponseHandler {
  
   /**
    * Constructor
-   * @param String url The url used in the HTTP request
    * @param ElementsHandler elHandler An ElementsHandler object
    * @return {void} N/A 
    */ 

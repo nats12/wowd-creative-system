@@ -7,6 +7,10 @@ import processing.net.*;
  */
 class InputHandler {
    
+  // Keys
+  char backspace = '\b';
+  char enter = '\n';
+  
   // Variable to store text currently being typed
   String typing = "";
     
@@ -45,19 +49,29 @@ class InputHandler {
    */
   void processUserInput() {
     // If the return key is pressed, save the String and clear it
-    if (key == '\n' ) {
+    if (key == enter) {
       year = typing;
       
-      // Check for invalid year inputs
-      if(parseInt(year) == 2002 || parseInt(year) == 2006 || parseInt(year) == 2007 || parseInt(year) == 2008 || parseInt(year) == 2009 || parseInt(year) == 2010 || parseInt(year) == 2011 || parseInt(year) == 2013 || parseInt(year) == 2014 || parseInt(year) == 2016) {
-        error = true;
-        year = "";
-      }
-      
-      // A String can be cleared by setting it equal to ""
+      switch(parseInt(year)) {
+        case 2002: 
+        case 2006: 
+        case 2007:
+        case 2008:
+        case 2009:
+        case 2010:
+        case 2011:
+        case 2013:
+        case 2014:
+        case 2016:
+          error = true;
+          year = "";
+          break;
+     }
+
+      // Clear typing string
       typing = ""; 
  
-    } else if(key == '\b') {
+    } else if(key == backspace) {
       // If the backspace key is pressed, remove the last character from the string
       typing = typing.substring(0, typing.length() - 1);
     } else {
@@ -66,7 +80,6 @@ class InputHandler {
       typing = typing + key; 
     }
   }
-
 
   /**
    * displayUserInput
@@ -78,14 +91,13 @@ class InputHandler {
     int indent = 25;
     textFont(f);
     fill(0);
-    textSize(16);
-    text("You would like to see a website design inspired by those from the year: ", indent, 170);
+    textSize(24);
+    text("You would like to see a typical website from the year: " + typing, indent, 170);
     textSize(12);
     text("(Choose from: 1990, 1992, 1993, 1994, 1995, 1996, 1997, 1998, 1999, 2000, 2001, 2003, 2004, 2005, 2012, 2015, 2017)", indent, 190);
-    textSize(16);
-    text("Input: " + typing, indent, 250);
     
     if(error) {
+      textSize(24);
       fill(255,0,0);
       text("Please enter a valid year from the list above!", indent, 230);
     }

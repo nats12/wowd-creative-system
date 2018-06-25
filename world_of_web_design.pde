@@ -67,7 +67,8 @@ void draw() {
    * @return {void} N/A
    */
   void keyPressed() {
-     
+    
+    inputHandler.error = false;
     inputHandler.processUserInput(); 
 
     // Keep drawing until year has been given
