@@ -6,9 +6,7 @@ import processing.net.*;
  * 
  */
 class ResponseHandler {
-  String requestUrl;
-  ElementsHandler elementsHandler;
- 
+   ElementsHandler elementsHandler = new ElementsHandler();
  
   /**
    * Constructor
@@ -16,21 +14,8 @@ class ResponseHandler {
    * @param ElementsHandler elHandler An ElementsHandler object
    * @return {void} N/A 
    */ 
-  ResponseHandler(String url, ElementsHandler elHandler) {
-    requestUrl = url;
+  ResponseHandler(ElementsHandler elHandler) {
     elementsHandler = elHandler;
-  }
-    
-  
-  /**
-   * getUrl
-   * Returns the url used in the HTTP request
-   * @param N/A
-   * @return {String} requestUrl The request url (one of the API endpoints) 
-   */ 
-  String getUrl() {
-    
-    return requestUrl;
   }
     
   
@@ -40,7 +25,7 @@ class ResponseHandler {
    * @param N/A
    * @return {String} The body of the HTTP request containing the database data
    */
-  String[] getResponseBody() {
+  String[] getResponseBody(String requestUrl) {
   
     return loadStrings(requestUrl);
   }

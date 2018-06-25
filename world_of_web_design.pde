@@ -46,8 +46,9 @@ void setup() {
 void draw() {
   background(255);
   
-  responseHandler = new ResponseHandler("http://localhost:8000/api/websites/new", elementsHandler);
-  response = responseHandler.getResponseBody();
+  String url = "http://localhost:8000/api/websites/new";
+  responseHandler = new ResponseHandler(elementsHandler);
+  response = responseHandler.getResponseBody(url);
   
   if(inputHandler.year == "") {
     inputHandler.displayUserInput();
@@ -59,6 +60,20 @@ void draw() {
 }
 
 
+ /**
+   * keyPressed
+   * Listener function which calls the processUserInput when key is pressed
+   * @param N/A
+   * @return {void} N/A
+   */
+  void keyPressed() {
+     
+    inputHandler.processUserInput(); 
+
+    // Keep drawing until year has been given
+    redraw();   
+  }
+  
 
   /**
    * drawElements
@@ -77,16 +92,4 @@ void draw() {
   }
   
  
-  /**
-   * keyPressed
-   * Listener function which calls the processUserInput when key is pressed
-   * @param N/A
-   * @return {void} N/A
-   */
-  void keyPressed() {
-     
-    inputHandler.processUserInput(); 
-
-    // Keep drawing until year has been given
-    redraw();   
-  }
+ 

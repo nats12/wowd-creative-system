@@ -127,39 +127,6 @@ import processing.net.*;
   }
   
  
-  
-  /**
-   * getObjectChildren
-   * Sends a HTTP request to an API endpoint that fetches all children elements of an element
-   * @param element 
-   * @return {String[]} response A string array containing an element's child elements
-   */
-  public String[] getElementChildren(String element) {
-
-    ResponseHandler responseHandler;
-    responseHandler = new ResponseHandler("http://localhost:8000/api/websites/" + inputHandler.year + "/elements/" + element + "/children", this);
-    return response = responseHandler.getResponseBody();
-  }
-  
-  
-  /**
-   * getElementSiblings
-   * Sends a HTTP request to an API endpoint that fetches all sibling elements of an element
-   * @param element 
-   * @return {String[]} response A string array containing an element's sibling elements 
-   */
-  public String [] getElementSiblings(String element) {
-    
-    ResponseHandler responseHandler;
-    responseHandler = new ResponseHandler("http://localhost:8000/api/websites/" + inputHandler.year + "/elements/" + element + "/siblings", this);
-    return response = responseHandler.getResponseBody();
-    
-  }
-  
-  
- 
-  
-  
   /**
    * drawImageElements
    * Calls the Image display function for every Image object in the imagesArray

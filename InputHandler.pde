@@ -38,8 +38,8 @@ class InputHandler {
   
   
   /**
-   * keyPressed
-   * Listens for key presses and, specifically the return and backspace keys to adjust the "year" variable accordingly
+   * processUserInput
+   * Processes user input - checks for valid year, updates the year string when enter is pressed etc.
    * @param N/A
    * @return {void} N/A
    */
