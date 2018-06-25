@@ -37,7 +37,7 @@ import processing.net.*;
    * @param JSONObject object 
    * @return {void} N/A 
    */
-   public void getWebsiteElementCount(JSONObject object) {
+   public void getElementCount(JSONObject object) {
     
       numberOfImages = getNumberOfImagesInObject(object);
 

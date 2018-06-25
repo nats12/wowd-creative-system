@@ -39,7 +39,7 @@ class ResponseHandler {
    * @param String year The user's input 
    * @return {void} N/A
    */
-  void formatResponse(String[] response, String year) {
+  void formatResponseIntoJSON(String[] response, String year) {
    
     for (int i = 0; i < response.length; i++) {
       // Remove array brackets and every object's final curly bracket
@@ -47,20 +47,49 @@ class ResponseHandler {
       
       for(int k = 0; k < formattedResponse.length-1; k++) {
         // Re-append last curly bracket to make them JSON parsable
-        JSONObject obj = parseJSONObject(formattedResponse[k].concat("}"));
-
-        if (obj == null) {
-          println("JSONObject could not be parsed");
-        } else {
-          if(obj.getInt("year") == parseInt(year)) {
-            // Find the object matching the given year and insert shape objects into an array for every type of element
-            elementsHandler.getWebsiteElementCount(obj);
-          } 
-        }
+        JSONObject website = parseJSONObject(formattedResponse[k].concat("}"));
+        
+        processWebsiteData(website, year);
       }
     }
   }
+ 
   
+  /**
+   * processWebsiteData
+   * Matches the user's input with the website year found in the response
+   * Calls function to extract number of elements found.
+   * @param JSONObject website The website (a JSONObject with fields named after elements and a count of how many found) 
+   * @param String userInputYear The user's year input 
+   * @return {void} N/A
+   */
+  void processWebsiteData(JSONObject website, String userInputYear) {
+    
+    if (website == null) {
+      println("JSONObject could not be parsed");
+    } else {
+      if(isAMatch(website.getInt("year"), parseInt(userInputYear))) { // If the user's input year matches a website year in the response 
+        elementsHandler.getElementCount(website); // Get a count of different HTML elements to be drawn
+      } 
+    }
+  }
+
+
+  /**
+   * isAMatch
+   * Function comparing two integers. 
+   * @param int a
+   * @param int b
+   * @return {boolean} True if parameters are the same, false otherwise
+   */
+  boolean isAMatch(int a, int b) {
+    
+    if(a == b) {
+      return true;
+    }
+    
+    return false;
+  }
   
   
   /**

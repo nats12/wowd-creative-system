@@ -53,7 +53,7 @@ void draw() {
   if(inputHandler.year == "") {
     inputHandler.displayUserInput();
   } else {
-    responseHandler.formatResponse(response, inputHandler.year);
+    responseHandler.formatResponseIntoJSON(response, inputHandler.year);
     drawWebsiteDesign();
   }
   
@@ -88,7 +88,6 @@ void draw() {
     website.topSection();
     website.midSection();
     website.bottomSection();
-  
   }
   
  
