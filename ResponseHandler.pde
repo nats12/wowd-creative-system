@@ -6,15 +6,15 @@ import processing.net.*;
  * 
  */
 class ResponseHandler {
-   ElementsHandler elementsHandler = new ElementsHandler();
+   Website webHandler = new Website();
  
   /**
    * Constructor
    * @param ElementsHandler elHandler An ElementsHandler object
    * @return {void} N/A 
    */ 
-  ResponseHandler(ElementsHandler elHandler) {
-    elementsHandler = elHandler;
+  ResponseHandler(Website web) {
+    webHandler = web;
   }
     
   
@@ -68,7 +68,7 @@ class ResponseHandler {
       println("JSONObject could not be parsed");
     } else {
       if(isAMatch(website.getInt("year"), parseInt(userInputYear))) { // If the user's input year matches a website year in the response 
-        elementsHandler.getElementCount(website); // Get a count of different HTML elements to be drawn
+        webHandler.init(website); // Get a count of different HTML elements to be drawn
       } 
     }
   }

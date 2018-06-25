@@ -10,9 +10,9 @@ java.awt.Insets insets;
 PFont f;
 
 ResponseHandler responseHandler;
-ElementsHandler elementsHandler;
 InputHandler inputHandler;
 Website website;
+WebsiteWindow websiteWindow;
 
 String[] response;
 
@@ -27,10 +27,9 @@ void setup() {
  
   f = createFont("Arial", 16);
   
-  elementsHandler = new ElementsHandler();
   inputHandler = new InputHandler();
-  
-  website = new Website(elementsHandler);
+  website = new Website();
+  websiteWindow = new WebsiteWindow(website);
   
     
   // Stop draw function from looping once year has been set
@@ -47,7 +46,7 @@ void draw() {
   background(255);
   
   String url = "http://localhost:8000/api/websites/new";
-  responseHandler = new ResponseHandler(elementsHandler);
+  responseHandler = new ResponseHandler(website);
   response = responseHandler.getResponseBody(url);
   
   if(inputHandler.year == "") {
@@ -85,10 +84,10 @@ void draw() {
   void drawWebsiteDesign() {
    
     background(255);
-
-    website.topSection();
-    website.midSection();
-    website.bottomSection();
+    
+    websiteWindow.topSection();
+    websiteWindow.midSection();
+    websiteWindow.bottomSection();
   }
   
  

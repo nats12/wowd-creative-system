@@ -7,97 +7,118 @@ import processing.net.*;
  */
 class Website {
  
-  // Website structure variables
-  int topX;
-  int topY;
-  int topWidth;
-  int topHeight;
-  
-  int midX;
-  int midY;
-  int midWidth;
-  int midHeight;
-  
-  int bottomX;
-  int bottomY;
-  int bottomWidth;
-  int bottomHeight;
-
-  
-  ElementsHandler elementsHandler;
+  int numberOfImages;
+  ArrayList<Image> imagesArray = new ArrayList<Image>();
  
   /**
    * Constructor
    * @param ElementsHandler elHandler An ElementsHandler object
    * @return {void} N/A
    */ 
-  Website(ElementsHandler elHandler) {
-    topX = 0;
-    topY = 0;
-    topWidth = 1024;
-    topHeight = 100;
-    
-    midX = 0;
-    midY = 100;
-    midWidth = 1024;
-    midHeight = 600;
-    
-    bottomX = 0;
-    bottomY = 700;
-    bottomWidth = 1024;
-    bottomHeight = 67;
-    
-    elementsHandler = elHandler;
-  }
-  
-  
+  Website() {}
+
   
   /**
-   * topSection
-   * Draws a rectangle for the top section of the frame
-   * Draws nav elements
-   * @param N/A
+   * getElementCount
+   * Gets the number of times a specific element is present in a website design
+   * @param JSONObject object
+   * @param String website
+   * @return {}  
+   */
+   void getElementCount(JSONObject object, String element) {
+
+    numberOfImages = object.getInt(element);
+   }
+ 
+  
+  /**
+   * getWebsiteElementCount
+   * Calls functions to obtain the number of each element in each website.
+   * Calls functions that populates element arrays ready for drawing.
+   * @param JSONObject object 
    * @return {void} N/A 
-   */ 
-  void topSection() {
+   */
+   void init(JSONObject object) {
     
-    noFill();
-
-    rect(topX, topY, topWidth, topHeight);
-  }
-  
-  
-  
-  /**
-   * midSection
-   * Draws a rectangle for the middle section of the frame
-   * Draws image, link and paragraph elements
-   * @param N/A
-   * @return {void} N/A   
-   */ 
-  void midSection() {
+      getElementCount(object, "img");
+      
+      populateImagesArray();
+   }
    
-    noFill();
-
-    rect(midX, midY, midWidth, midHeight);
-    
-    elementsHandler.drawImageElements();
-  }
   
+  /**
+   * drawImageElements
+   * Calls the Image display function for every Image object in the imagesArray
+   * @param N/A
+   * @return {void} N/A
+   */
+  public void drawImageElements() {
+    
+    for(Image img : imagesArray) {
+        img.display();
+    }
+  }
   
   
   /**
-   * bottomSection
-   * Draws a rectangle for the bottom section of the frame
-   * Draws footer elements
+   * populateImagesArray
+   * Generates random x and y positions and width and height values for Image objects
+   * Populates the imagesArray with Image objects
    * @param N/A
-   * @return {void} N/A  
-   */ 
-  void bottomSection() {
+   * @return {ArrayList} imagesArray An array populated with Image objects  
+   */
+   public ArrayList<Image> populateImagesArray() {
     
-    noFill();
+    int x = 0;
+    int y = 200;
 
-    rect(bottomX, bottomY, bottomWidth, bottomHeight);
+    int images = 0;
+    int percentOfImagesArray = (int)(numberOfImages / 100) * 2;
+     
+     if(numberOfImages > 15) {
+       images = percentOfImagesArray;
+     } else {
+       images = numberOfImages;
+     }
+    
+    
+    int imageWidth = int(random(150, 200));
+    int imageHeight = int(random(150, 200));
+    
+    int randX = int(random(100, 450));
+    int randY = 110;
+    
+    if(images > 0) {
+      for(int k = 0; k < images; k++) {
+       
+        randY += imageHeight;
+        
+        if(randX + imageWidth > 1020) {
+          int newX = (randX + imageWidth) - 1020;
+          randX -= newX;
+        }
+        if((randY + imageHeight) > 600) {
+          randY -= 110;
+          // Shift paragraphs to other side
+          randX = int(random(450, 1020));
+        }
+        
+        println("IMAGE");
+        println("Random x: ");
+        println(randX);
+        println("Random y: ");
+        println(randY);
+        println("Random width: ");
+        println(imageWidth);
+        println("Random height: ");
+        println(imageHeight);
+        
+        imagesArray.add(new Image(randX, randY, imageWidth, imageHeight));
+
+       }
+     } 
+     
+
+     return imagesArray;
   }
-  
 }
