@@ -64,8 +64,6 @@ class Website {
     noFill();
 
     rect(topX, topY, topWidth, topHeight);
-    
-    elementsHandler.drawNavElements();
   }
   
   
@@ -84,8 +82,6 @@ class Website {
     rect(midX, midY, midWidth, midHeight);
     
     elementsHandler.drawImageElements();
-    elementsHandler.drawLinkElements();
-    elementsHandler.drawParagraphElements();
   }
   
   
@@ -102,8 +98,6 @@ class Website {
     noFill();
 
     rect(bottomX, bottomY, bottomWidth, bottomHeight);
-    
-    elementsHandler.drawFooter();
   }
   
 }
