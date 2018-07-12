@@ -6,9 +6,10 @@
  
  
 class Image {
-  float x,y;
-  int imageWidth;
-  int imageHeight;
+  private float x;
+  private float y;
+  private int imageWidth;
+  private int imageHeight;
   
   
   /**
@@ -20,10 +21,10 @@ class Image {
    * @return {void} N/A 
    */
   Image(float x_, float y_, int _width, int _height) {
-    x = x_;
-    y = y_;
-    imageWidth = _width;
-    imageHeight = _height;
+    this.x = x_;
+    this.y = y_;
+    this.imageWidth = _width;
+    this.imageHeight = _height;
   }
   
   
@@ -35,7 +36,7 @@ class Image {
    */
   public float getX() {
     
-    return x;
+    return this.x;
   }
   
   
@@ -48,7 +49,7 @@ class Image {
    */
   public float getY() {
     
-    return y;
+    return this.y;
   }
   
   
@@ -57,13 +58,13 @@ class Image {
    * 
    * 
    */
-  void display() {
+  public void display() {
     PImage img;
     img = loadImage("moonwalk.jpg");
   
     stroke(0);
     strokeWeight(1);
     noFill();
-    image(img, x, y, imageWidth, imageHeight);
+    image(img, this.x, this.y, this.imageWidth, this.imageHeight);
   }
 }

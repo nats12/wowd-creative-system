@@ -7,8 +7,8 @@ import processing.net.*;
  */
 class Website {
  
-  private int responseImages;
-  private ArrayList<Image> imagesArray = new ArrayList<Image>();
+  int responseImages;
+  ArrayList<Image> imagesArray = new ArrayList<Image>();
  
   /**
    * Constructor
@@ -31,13 +31,7 @@ class Website {
      
    }
    
-   /**
-     * processImageElements
-     * Function calls to retrieve element counts and populate image array
-     * @param JSONObject website
-     * @param String element
-     * @return {}  
-     */
+   
    public void processImageElements(JSONObject website, String element) {
      
      getHTMLElementCount(website, element);
@@ -53,9 +47,9 @@ class Website {
    * @param String website
    * @return {}  
    */
-   public void getHTMLElementCount(JSONObject website, String element) {
+   void getHTMLElementCount(JSONObject website, String element) {
 
-    this.responseImages = website.getInt(element);
+    responseImages = website.getInt(element);
     
    }
  
@@ -70,14 +64,16 @@ class Website {
     
     int index = 0;
     
-    for(Image img : this.imagesArray) {
-        
+    for(Image img : imagesArray) {
+       
         if(index > 0) {
-          if(this.imagesArray.get(index).x < (imagesArray.get(index-1).x + this.imagesArray.get(index-1).imageWidth)) {
-            this.imagesArray.get(index).x = this.imagesArray.get(index-1).x + this.imagesArray.get(index-1).imageWidth;
+          double currentImgX = imagesArray.get(index).x;
+          double prevImgX = imagesArray.get(index-1).x;
+          double prevImgWidth = imagesArray.get(index-1).imageWidth;
+          if(currentImgX < (prevImgX + prevImgWidth)) {
+            currentImgX = prevImgX + prevImgWidth;
           }
         }
-        
         index++;
         
         img.display();  
@@ -96,12 +92,16 @@ class Website {
    
     int images = 0;
     int percentOfImagesArray = (int)(responseImages / 100) * 2;
-
+    
+    int neighbourX = 0;
+    int neighbourY = 0;
+    
      if(responseImages > 6) {
        images = percentOfImagesArray;
      } else {
        images = responseImages;
      }
+    
     
     if(images > 0) {
       for(int k = 0; k < images; k++) {
@@ -125,12 +125,12 @@ class Website {
  
         println("Random x: " + x + ", Random y: " + y + ", Random width: " + imageWidth + ", Random height: " + imageHeight);
 
-        this.imagesArray.add(new Image(x, y, imageWidth, imageHeight));
+        imagesArray.add(new Image(x, y, imageWidth, imageHeight));
 
        }
      } 
      
 
-     return this.imagesArray;
+     return imagesArray;
   }
 }

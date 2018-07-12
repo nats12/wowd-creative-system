@@ -8,20 +8,20 @@ import processing.net.*;
 class WebsiteWindow {
  
   // Website structure variables
-  int topX;
-  int topY;
-  int topWidth;
-  int topHeight;
+  private int topX;
+  private int topY;
+  private int topWidth;
+  private int topHeight;
   
-  int midX;
-  int midY;
-  int midWidth;
-  int midHeight;
+  private int midX;
+  private int midY;
+  private int midWidth;
+  private int midHeight;
   
-  int bottomX;
-  int bottomY;
-  int bottomWidth;
-  int bottomHeight;
+  private int bottomX;
+  private int bottomY;
+  private int bottomWidth;
+  private int bottomHeight;
 
   
   Website website;
@@ -32,22 +32,22 @@ class WebsiteWindow {
    * @return {void} N/A
    */ 
   WebsiteWindow(Website web) {
-    topX = 0;
-    topY = 0;
-    topWidth = 1024;
-    topHeight = 100;
+    this.topX = 0;
+    this.topY = 0;
+    this.topWidth = 1024;
+    this.topHeight = 100;
     
-    midX = 0;
-    midY = 100;
-    midWidth = 1024;
-    midHeight = 600;
+    this.midX = 0;
+    this.midY = 100;
+    this.midWidth = 1024;
+    this.midHeight = 600;
     
-    bottomX = 0;
-    bottomY = 700;
-    bottomWidth = 1024;
-    bottomHeight = 67;
+    this.bottomX = 0;
+    this.bottomY = 700;
+    this.bottomWidth = 1024;
+    this.bottomHeight = 67;
     
-    website = web;
+    this.website = web;
   }
   
   
@@ -59,11 +59,11 @@ class WebsiteWindow {
    * @param N/A
    * @return {void} N/A 
    */ 
-  void topSection() {
+  public void topSection() {
     
     noFill();
 
-    rect(topX, topY, topWidth, topHeight);
+    rect(this.topX, this.topY, this.topWidth, this.topHeight);
   }
   
   
@@ -75,13 +75,13 @@ class WebsiteWindow {
    * @param N/A
    * @return {void} N/A   
    */ 
-  void midSection() {
+  public void midSection() {
    
     noFill();
 
-    rect(midX, midY, midWidth, midHeight);
+    rect(this.midX, this.midY, this.midWidth, this.midHeight);
     
-    website.drawImageElements();
+    this.website.drawImageElements();
   }
   
   
@@ -93,11 +93,11 @@ class WebsiteWindow {
    * @param N/A
    * @return {void} N/A  
    */ 
-  void bottomSection() {
+  public void bottomSection() {
     
     noFill();
 
-    rect(bottomX, bottomY, bottomWidth, bottomHeight);
+    rect(this.bottomX, this.bottomY, this.bottomWidth, this.bottomHeight);
   }
   
 }

@@ -14,7 +14,7 @@ class ResponseHandler {
    * @return {void} N/A 
    */ 
   ResponseHandler(Website web) {
-    webHandler = web;
+    this.webHandler = web;
   }
     
   
@@ -24,7 +24,7 @@ class ResponseHandler {
    * @param N/A
    * @return {String} The body of the HTTP request containing the database data
    */
-  String[] getResponseBody(String requestUrl) {
+  public String[] getResponseBody(String requestUrl) {
   
     return loadStrings(requestUrl);
   }
@@ -38,7 +38,7 @@ class ResponseHandler {
    * @param String year The user's input 
    * @return {void} N/A
    */
-  void formatResponseIntoJSON(String[] response, String year) {
+  public void formatResponseIntoJSON(String[] response, String year) {
    
     for (int i = 0; i < response.length; i++) {
       // Remove array brackets and every object's final curly bracket
@@ -62,13 +62,13 @@ class ResponseHandler {
    * @param String userInputYear The user's year input 
    * @return {void} N/A
    */
-  void processWebsiteData(JSONObject website, String userInputYear) {
+  public void processWebsiteData(JSONObject website, String userInputYear) {
     
     if (website == null) {
       println("JSONObject could not be parsed");
     } else {
       if(isAMatch(website.getInt("year"), parseInt(userInputYear))) { // If the user's input year matches a website year in the response 
-        webHandler.init(website); // Get a count of different HTML elements to be drawn
+        this.webHandler.init(website); // Get a count of different HTML elements to be drawn
       } 
     }
   }
@@ -81,7 +81,7 @@ class ResponseHandler {
    * @param int b
    * @return {boolean} True if parameters are the same, false otherwise
    */
-  boolean isAMatch(int a, int b) {
+  public boolean isAMatch(int a, int b) {
     
     if(a == b) {
       return true;
@@ -97,7 +97,7 @@ class ResponseHandler {
    * @param String responseObject The HTTP response body
    * @return {String[]} The HTTP response body without "}" brackets 
    */
-  String[] splitEndBracketAndComma(String responseObject) {
+  public String[] splitEndBracketAndComma(String responseObject) {
     
     return responseObject.substring(1, responseObject.length()-1).split("},"); 
   }
