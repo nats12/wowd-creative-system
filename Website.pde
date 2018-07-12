@@ -73,14 +73,28 @@ class Website {
     for(Image img : this.imagesArray) {
         
         if(index > 0) {
-          if(this.imagesArray.get(index).x < (imagesArray.get(index-1).x + this.imagesArray.get(index-1).imageWidth)) {
-            this.imagesArray.get(index).x = this.imagesArray.get(index-1).x + this.imagesArray.get(index-1).imageWidth;
-          }
+          float currentX = this.imagesArray.get(index).x;
+          float prevX = this.imagesArray.get(index-1).x;
+          float prevXWidth = this.imagesArray.get(index-1).imageWidth;
+      
+          adjustPositions(currentX, prevX, prevXWidth, index);
         }
         
         index++;
         
         img.display();  
+    }
+  }
+  
+  
+  /**
+   * adjustPositions
+   *  
+   */
+  public void adjustPositions(float currentX, float prevX, float prevXWidth, int index) {
+    
+    if(currentX < (prevX + prevXWidth)) {
+      this.imagesArray.get(index).x = this.imagesArray.get(index-1).x + this.imagesArray.get(index-1).imageWidth;
     }
   }
   
